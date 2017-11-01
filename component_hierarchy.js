@@ -31,3 +31,5 @@ const data = {
 "Properties: Have a global new Map, keys are strings, value is an object"
   "{price, owner, housing: [](str), rent}"
 "PlayerTypes: new Map: name:{image}"
+
+'redux'
