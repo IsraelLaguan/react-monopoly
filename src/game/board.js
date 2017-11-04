@@ -1,25 +1,27 @@
 import Squares from '../database/squares'
-import Dice from './die'
+import Die from './die'
 
 export default class Board {
-  constructor() {
-    this.board = Squares
-    this.currentPlayer = 0
+  constructor(player) {
+    this._board = Squares
+    this._currentPlayer = player
+    this._die = new Die
   }
 
-  changeTurn() {
-    this.currentPlayer += 1
+  changePlayerTo(player) {
+    this._currentPlayer = player
     return this
   }
 
   startTurn() {
-    const diceRollValue = new Die().roll()
-    this.currentPlayer.move(diceRollValue)
-    const currentSquare = this.getCurrentSquare()
+    const diceRollValue = this._die.roll()
+    this._currentPlayer.move(diceRollValue)
+    const currentSquare = this._getCurrentSquare()
+    return this
   }
 
-  getCurrentSquare() {
-    const playersPosition = this.currentPlayer.currentPosition
-    return Squares[`${playersPosition}`]
+  _getCurrentSquare() {
+    const playerPos = this._currentPlayer.currentPosition
+    return this._board[`${playerPos}`]
   }
 }

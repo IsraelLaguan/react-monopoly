@@ -1,4 +1,4 @@
-
+import Squares from '../database/squares'
 
 export default class Player {
   constructor(icon, id) {
@@ -10,17 +10,18 @@ export default class Player {
     this.turnsLost = 0
     this.cards = new Set
     this.currentPosition = 0
+    this.maxSqId = Object.keys(Squares).length
   }
 
   exportData() {
-    { cash, icon, deeds, inJail, turnsLost, cards, currentPosition } = this
+    const { cash, icon, deeds, inJail, turnsLost, cards, currentPosition } = this
     return { cash, icon, deeds, inJail, turnsLost, cards, currentPosition }
   }
 
   move(diceRoll) {
     this.currentPosition += diceRoll
-    if (currentPosition > 2) {
-      this.currentPosition -= 2
+    if (this.currentPosition > this.maxSqId) {
+      this.currentPosition -= this.maxSqId
     }
     return this
   }
@@ -39,15 +40,14 @@ export default class Player {
     return this
   }
 
-  rollDie() {
-    return Math.ceil(Math.random() * 6)
-  }
-
-  getDeeds(deedSet) {
-    return deedSet.filter(({id}) =>  this.deeds.has(id))
+  getDeeds(allDeeds) {
+    return allDeeds.filter(key => {
+      let keyId = allDeeds[key].id
+      return this.deeds.has(`${keyId}`)
+    })
   }
 
   changeCash(amt) {
-    this.player.cash += amt
+    this.cash += amt
   }
 }

@@ -30,3 +30,15 @@ Array.prototype.includesAll = function(setOrArray) {
   }
   return true
 }
+
+Object.prototype.filter = function(cb) {
+  const newObj = {}
+  for (let el in this) {
+    if (cb(el)) {
+      newObj[el] = this[el]
+    }
+  }
+  return newObj
+}
+
+export { Set, Array, Object }

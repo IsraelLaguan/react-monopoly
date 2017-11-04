@@ -1,7 +1,8 @@
-export default const Squares = {
+const Squares = {
   0: {
+    id: 0,
     name: 'ParkPlace',
-    type: 'deed'
+    type: 'deed',
     price: 100,
     sets: [2],
     owner: null,
@@ -14,8 +15,9 @@ export default const Squares = {
     hotels: 0
   },
   1: {
+    id: 1,
     name: 'ParkPlace2',
-    type: 'chance'
+    type: 'chance',
     price: 100,
     sets: [2],
     owner: null,
@@ -28,8 +30,9 @@ export default const Squares = {
     hotels: 0
   },
   2: {
+    id: 2,
     name: 'ParkPlace3',
-    type: 'deed'
+    type: 'deed',
     price: 100,
     sets: [2],
     owner: null,
@@ -42,3 +45,5 @@ export default const Squares = {
     hotels: 0
   }
 }
+
+export default Squares
