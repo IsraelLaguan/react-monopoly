@@ -1,7 +1,7 @@
 import Player from '../../game/player'
 import Squares from '../../database/squares'
 
-import * as helpers from '../../game/helpers/data_structure_helpers.js'
+import * as helpers from '../../game/helpers/helpers.js'
 
 describe('Player class', () => {
   let player

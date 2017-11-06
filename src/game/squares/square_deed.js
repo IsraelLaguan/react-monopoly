@@ -18,8 +18,7 @@ export default class SquareDeed {
   exportData() {
     { name, type, price, sets, owner, rent, houses, hotels } = this
     const player = this.player.exportData()
-    const deed = { name, type, price, sets, owner, rent, houses, hotels}
-    return { player, deed }
+    return { name, type, price, sets, owner, rent, houses, hotels}
   }
 
   ownedByPlayer() {
@@ -28,7 +27,6 @@ export default class SquareDeed {
 
   addHouse() {
     this.houses += 1
-    player.
     return this
   }
 
@@ -39,14 +37,16 @@ export default class SquareDeed {
 
   setOwner(playerIdx) {
     this.owner = playerIdx
-    this._purchase()
+    return this
   }
 
   payRent() {
     this.player.ChangeCash(-this.rent)
+    return this
   }
 
-  _purchase() {
+  purchase() {
     this.player.changeCash(this.price)
+    return this
   }
 }
