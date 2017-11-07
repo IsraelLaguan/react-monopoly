@@ -1,4 +1,4 @@
-import Squares from '../../database/squares'
+import Properties from '../../database/properties'
 import Board from '../../game/board'
 
 function Player() {
@@ -20,7 +20,7 @@ describe('Board class', () => {
 
   describe('constructor', () => {
     it('creates an instance of this.board', () => {
-      expect(board._board).toEqual(Squares)
+      expect(board._board).toEqual(Properties)
     })
     it('creates an instance of this._currentPlayer', () => {
       expect(board._currentPlayer).toEqual(player1)
@@ -36,9 +36,9 @@ describe('Board class', () => {
   })
 
   describe('_getCurrentSquare', () => {
-    it('gets correct position from Squares', () => {
+    it('gets correct position from Properties', () => {
       const currentSq = board._getCurrentSquare()
-      expect(currentSq).toEqual(Squares['0'])
+      expect(currentSq).toEqual(Properties['0'])
     })
   })
   describe('startTurn', () => {

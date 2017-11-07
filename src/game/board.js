@@ -1,11 +1,11 @@
-import Squares from '../database/squares'
+import Properties from '../database/properties'
 import Die from './die'
 
-export default class Board {
+export default class BoardComponent {
   constructor(player) {
-    this._board = Squares
+    this._board = Properties
     this._currentPlayer = player
-    this._die = new Die
+    this._die = new Die()
   }
 
   changePlayerTo(player) {
@@ -22,6 +22,6 @@ export default class Board {
 
   _getCurrentSquare() {
     const playerPos = this._currentPlayer.currentPosition
-    return this._board[`${playerPos}`]
+    return Properties[`${playerPos}`]
   }
 }

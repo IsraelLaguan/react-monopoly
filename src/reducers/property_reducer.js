@@ -7,7 +7,7 @@ const defaultState = {
 const PropertyReducer = (state = defaultState, action) => {
   Object.freeze(state)
   switch (action.type) {
-    case: RECEIVE_PROPERTY:
+    case RECEIVE_PROPERTY:
       const property = action.property
       return {...state, property}
     default:

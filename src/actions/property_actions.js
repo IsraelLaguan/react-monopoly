@@ -1,10 +1,10 @@
 export const RECEIVE_PROPERTY = 'RECEIVE_PROPERTY'
 
 export const receiveProperty = property => async (dispatch) => {
-  return dispatch(receiveProperty(property))
+  return dispatch(receivePropertyDispatch(property))
 }
 
-const receiveProperty = property = ({
+const receivePropertyDispatch = property => ({
   type: RECEIVE_PROPERTY,
   property
 })

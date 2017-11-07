@@ -1,21 +1,21 @@
-import Squares from '../database/squares'
+import Properties from '../database/properties'
 
 export default class Player {
-  constructor(icon, id) {
+  constructor({icon, id, cash, deeds, inJail, turnsLost, cards, currentPosition}) {
     this.id = id
-    this.cash = 100
+    this.cash = cash
     this.icon = icon
-    this.deeds = new Set
-    this.inJail = false
-    this.turnsLost = 0
-    this.cards = new Set
-    this.currentPosition = 0
-    this.maxSqId = Object.keys(Squares).length
+    this.deeds = deeds
+    this.inJail = inJail
+    this.turnsLost = turnsLost
+    this.cards = cards
+    this.currentPosition = currentPosition
+    this.maxSqId = Object.keys(Properties).length
   }
 
   exportData() {
-    const { cash, icon, deeds, inJail, turnsLost, cards, currentPosition } = this
-    return { cash, icon, deeds, inJail, turnsLost, cards, currentPosition }
+    const { id, cash, icon, deeds, inJail, turnsLost, cards, currentPosition } = this
+    return { id, cash, icon, deeds, inJail, turnsLost, cards, currentPosition }
   }
 
   move(diceRoll) {

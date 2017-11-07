@@ -1,20 +1,31 @@
 import Player from './player'
+import Board from './board'
+
 
 export default class Game {
   constructor() {
-    console.log('welcome to monopoly!')
+    this.board = new Board
+    this.player = new Player('dog', 0)
+  }
+
+  gameStart() {
+    this.board.changePlayerTo(this.player)
+    this.board.startTurn()
   }
 
   gameEnd() {
-    const notBroke = this.players.filter(({cash}) > 0)
+    const notBroke = this.players.filter(({cash}) => cash > 0)
     return notBroke.size === 1
   }
 
-  buildPlayers(selectionsArr) {
+  _buildPlayers(selectionsArr) {
     this.players = selectionsArr.map((el) => {
       return new Player(el)
     })
     return this
   }
 
+  startTurn() {
+    this.board.startTurn()
+  }
 }

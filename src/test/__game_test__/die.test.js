@@ -7,12 +7,19 @@ describe('Die class', () => {
   })
   describe('roll', () => {
     it('rolls a new valid value at random', () => {
-      let value, valid
+      let roll, valid, checkStill
+      const rollVals = new Set
+      valid = true
       for (let i = 0; i < 100; i ++) {
-        value = die.roll()
-        valid = value > 0 && value < 7
-        expect(valid).toEqual(true)
+        roll = die.roll()
+        rollVals.add(roll)
+        if(!(valid < 7 && valid > 0) && checkStill) {
+          valid = false
+          checkStill = false
+        }
       }
+      expect(rollVals.size).toEqual(6)
+      expect(valid).toEqual(true)
     })
   })
 })

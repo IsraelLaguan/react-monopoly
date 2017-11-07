@@ -1,5 +1,5 @@
 import Player from '../../game/player'
-import Squares from '../../database/squares'
+import Properties from '../../database/properties'
 
 import * as helpers from '../../game/helpers/helpers.js'
 
@@ -50,7 +50,7 @@ describe('Player class', () => {
   describe('getDeeds', () => {
     it('gets players deeds from all deeds', () => {
       player.deeds = new Set(['1', '2'])
-      const playersDeeds = player.getDeeds(Squares)
+      const playersDeeds = player.getDeeds(Properties)
       expect(Object.keys(playersDeeds)).toEqual(['1', '2'])
     })
   })
