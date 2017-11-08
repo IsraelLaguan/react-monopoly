@@ -13,11 +13,28 @@ export default class Turn {
     return { property: this.property, player }
   }
 
+  exportProperty() {
+    return { property: this.property }
+  }
+
+  exportPlayer() {
+    const player = this.player.exportData()
+    return {[this.player.id]: player}
+  }
+
   startTurn() {
     const diceRollValue = this._die.roll()
-    console.log(diceRollValue);
     this.player.move(diceRollValue)
-    console.log(this.player);
+    return this
+  }
+
+  purchase() {
+    const positionId = this.player.currentPosition
+    const currentProperty = this.property[`${positionId}`]
+    const cost = currentProperty.price
+    this.player.changeCash(-cost)
+    currentProperty.owner = this.player.id
+    return this
   }
 
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class BoardTile extends Component {
   render() {
-    const { name, price, id, currentPosition, icon } = this.props
+    const { name, price, id, currentPosition, icon, owner } = this.props
     const tempStyle = {
       height: '100px',
       width: '100px',
@@ -21,6 +21,7 @@ export default class BoardTile extends Component {
         <div>
           {price}
         </div>
+        {(typeof owner === 'number') ? owner : null}
         {currentPosition === id ? icon : null}
       </div>
     )

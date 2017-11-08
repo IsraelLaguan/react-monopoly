@@ -1,7 +1,9 @@
 export const RECEIVE_PLAYER = 'RECEIVE_PLAYER'
 
 export const receivePlayer = player => async (dispatch) => (
-  dispatch(receivePlayerDispatch(player))
+  (() => {
+    dispatch(receivePlayerDispatch(player))
+  })()
 )
 
 const receivePlayerDispatch = player => ({

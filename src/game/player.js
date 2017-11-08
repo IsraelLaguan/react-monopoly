@@ -20,7 +20,7 @@ export default class Player {
 
   move(diceRoll) {
     this.currentPosition += diceRoll
-    if (this.currentPosition > this.maxSqId) {
+    if (this.currentPosition >= this.maxSqId) {
       this.currentPosition -= this.maxSqId
     }
     return this
