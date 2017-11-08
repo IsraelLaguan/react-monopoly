@@ -7,7 +7,7 @@ export default class BoardTile extends Component {
       height: '100px',
       width: '100px',
       border:'2px solid black',
-      margin: '20px',
+      margin: '7px',
       display: 'flex',
       justifyContent: 'center',
       alignItems:'center',

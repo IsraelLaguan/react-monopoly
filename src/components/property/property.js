@@ -8,8 +8,8 @@ export default class Property extends Component {
   render() {
     return (
       <div>
-      {'A property'}
-      { this.props.player ? this.props.player : null }
+        {'A property'}
+        { this.props.player ? this.props.player : null }
       </div>
     )
   }
