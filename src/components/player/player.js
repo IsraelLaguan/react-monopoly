@@ -8,13 +8,14 @@ export default class Player extends Component {
       display: 'flex',
       justifyContent: 'center',
       alignItems:'center',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      fontSize: '40px'
     }
     return (
       <div style={tempStyle}>
-        {cash}
-        {icon}
-        {currentPosition}
+        cash: ${cash}
+        <img src={icon}/>
+        currPos: {currentPosition}
       </div>
     )
   }

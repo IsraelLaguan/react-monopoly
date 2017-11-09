@@ -8,18 +8,13 @@ export default class Turn {
     this._die = new Die()
   }
 
-  exportData() {
-    const player = this.player.exportData()
-    return { property: this.property, player }
-  }
-
   exportProperty() {
-    return { property: this.property }
+    return { ...this.property }
   }
 
   exportPlayer() {
     const player = this.player.exportData()
-    return {[this.player.id]: player}
+    return {[this.player.id]: {...player}}
   }
 
   startTurn() {
@@ -32,9 +27,11 @@ export default class Turn {
     const positionId = this.player.currentPosition
     const currentProperty = this.property[`${positionId}`]
     const cost = currentProperty.price
-    this.player.changeCash(-cost)
-    currentProperty.owner = this.player.id
-    return this
+    if (this.player.changeCash(-cost)) {
+      currentProperty.owner = this.player.id
+      return true
+    } else {
+      return false
+    }
   }
-
 }

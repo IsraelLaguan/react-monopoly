@@ -6,9 +6,10 @@ const props = [ //id is line number of file minus 2
   ['Income Tax', 'action'],
   ['Reading Railroad', 'deed', 200, [], [25, 50, 100, 200]],
   ['Oriental Ave', 'deed', 100, [], [6, 30, 90, 270, 400]],
+  ['Chance', 'action'],
   ['Vermont Ave', 'deed', 100, [], [6, 30, 90, 270, 400]],
   ['Connecticut Ave', 'deed', 120, [], [8, 40, 100, 300, 450]],
-  ['Go To Jail', 'action'], //bottom left
+  ['Jail', 'action'], //bottom left
   ['St. Charles Place', 'deed', 140, [], [10, 50, 150, 450, 625, 750]],
   ['Electric Company', 'deed', 150, [], [150]],
   ['States Ave', 'deed', 140, [], [10, 50, 150, 450, 625, 750]],
