@@ -16,6 +16,12 @@ export default class BoardCenter extends Component {
     )
   }
 
+  startTurnButton() {
+    return <button onClick={() => this.props.startTurn()}>
+            Start turn
+          </button>
+  }
+
   render() {
     const centerStyle = {
       width: '738px',
@@ -28,10 +34,7 @@ export default class BoardCenter extends Component {
     return (
       <div style={centerStyle}>
         <Player {...this.props.player}/>
-        <button onClick={() => this.props.startTurn()}>
-          Start turn
-        </button>
-        {this.prompt()}
+        {this.props.showPrompt ? this.prompt() : this.startTurnButton()}
       </div>
     )
   }

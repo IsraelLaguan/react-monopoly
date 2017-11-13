@@ -31,14 +31,30 @@ Array.prototype.includesAll = function(setOrArray) {
   return true
 }
 
-Object.prototype.filter = function(cb) {
-  const newObj = {}
-  for (let el in this) {
-    if (cb(el)) {
-      newObj[el] = this[el]
+// Object.prototype.filter = function(cb) {
+//   const newObj = {}
+//   for (let el in this) {
+//     if (cb(el)) {
+//       newObj[el] = this[el]
+//     }
+//   }
+//   return newObj
+// }
+
+Object.defineProperty(Object.prototype, 'size', {
+  get: function() {
+    let counter = 0
+    console.log(this)
+    for (let i in this) {
+      counter += 1
     }
-  }
-  return newObj
-}
+    return counter
+  },
+  writeable: false
+})
+
+// Object.prototype.size = function() {
+//   return Object.entries(this).length
+// }
 
 export { Set, Array, Object }

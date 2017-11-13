@@ -7,6 +7,7 @@ import Turn from '../../game/turn'
 import BoardCenter from './board_center'
 import { receivePlayer } from '../../actions/player_actions'
 import { receiveProperty } from '../../actions/property_actions'
+import {Object} from '../../game/helpers/helpers.js'
 
 class BoardPresentational extends Component {
   constructor() {
@@ -15,34 +16,32 @@ class BoardPresentational extends Component {
       player: {},
       showPrompt: false,
       currentPlayer: 0,
-      playerCount: 2
+      playerCount: 0
     }
   }
 
   componentWillMount() {
-    const player = Object.values(this.props.player)[this.state.currentPlayer]
-    this.setState({player})
+    const playerCount = this.props.player.size
+    debugger
+    this.setState({playerCount})
   }
 
   startTurn() {
     let {player, property} = this.props
-    const currPlayer = Object.values(this.props.player)[this.state.currentPlayer]
+    const currPlayer = Object.values(player)[this.state.currentPlayer]
     this.turn = new Turn({player: currPlayer, property})
     this.turn.startTurn()
     this.updateBoard()
     this.setState({showPrompt: !this.state.showPrompt})
   }
 
-  updateBoard() {
+  async updateBoard() {
     const propertyDispatchData = this.turn.exportProperty()
     const playerDispatchData = this.turn.exportPlayer()
     this.props.receiveProperty(propertyDispatchData)
-    this.props.receivePlayer(playerDispatchData)
-    .then(() => {
-      this.setState({
-        player: Object.values(this.props.player)[this.state.currentPlayer]
-      })
-    })
+    await this.props.receivePlayer(playerDispatchData)
+    const player = Object.values(this.props.player)[this.state.currentPlayer]
+    this.setState({player})
   }
 
   purchase() {
@@ -52,7 +51,6 @@ class BoardPresentational extends Component {
       console.log('not enough monies');
     }
     this.updateBoard()
-    this.setState({showPrompt: !this.state.showPrompt})
     this.nextTurn()
   }
 
@@ -68,52 +66,34 @@ class BoardPresentational extends Component {
     } else {
       currPlayerId = currentPlayer + 1
     }
-    this.setState({currentPlayer: currPlayerId})
+    this.setState({
+      currentPlayer: currPlayerId,
+      showPrompt: !this.state.showPrompt
+    })
   }
 
   boardTiles(startIdx, endIdx = null) {
     const properties = Object.values(this.props.property)
-    // const {icon, currentPosition } = this.state.player
     endIdx = endIdx ? endIdx : properties.length
-
     return properties.slice(startIdx, endIdx).map(data => {
       let { name, price, id, owner } = data
-      // let player = this.props.player[owner]
-      let that = this
-      let player = Object.entries(this.props.player).filter(([playerId, player]) => {
-        return player.currentPosition === id
-      }).map(([playerId, {icon}]) => icon)
-      if (id === 0) {
-        console.log(this.props.player);
-        debugger
-      }
-      // debugger
-      let icons
-      if (player) {
-        icons = player
-      } else {
-        icons = null
-      }
+      let playerIcons = this._playersAtPosition(id).map(([playerId, {icon}]) => icon)
+      let icons = playerIcons ? playerIcons : []
       let boardTileProps = {name, price, id, icons, owner}
       return <BoardTile key={id} {...boardTileProps}/>
     })
   }
 
-  topBoard() {
-    return this.boardTiles(20, 31)
+  _playersAtPosition(id) {
+    return Object.entries(this.props.player).filter(([playerId, player]) => {
+      return player.currentPosition === id
+    })
   }
 
-  leftBoard() {
-    return this.boardTiles(11, 20)
-  }
-
-  rightBoard() {
-    return this.boardTiles(31)
-  }
-
-  bottomBoard() {
-    return this.boardTiles(0, 11)
-  }
+  topBoard() {return this.boardTiles(20, 31)}
+  leftBoard() {return this.boardTiles(11, 20)}
+  rightBoard() {return this.boardTiles(31)}
+  bottomBoard() {return this.boardTiles(0, 11)}
 
   render() {
     const tempStyle = {
@@ -159,6 +139,7 @@ class BoardPresentational extends Component {
     const playerProps = { cash, icon, currentPosition }
     const boardCenterProps = {
       player: playerProps,
+      showPrompt: this.state.showPrompt,
       startTurn: () => this.startTurn(),
       purchase: () => this.purchase(),
       nextTurn: () => this.nextTurn()
