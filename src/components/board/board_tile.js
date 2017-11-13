@@ -13,6 +13,11 @@ export default class BoardTile extends Component {
       flexDirection: 'column',
       backgroundColor: (typeof owner === 'number') ? '#e0dded' : 'transparent'
     }
+    const iconContainer = {
+      display: 'flex',
+      flexWrap: 'wrap',
+      flexDirection: 'row'
+    }
     const color = Color[id]
     const colorBar = {
       backgroundColor: color || 'transparent' ,
@@ -23,6 +28,7 @@ export default class BoardTile extends Component {
       height: '30px',
       width: '30px'
     }
+    const iconImgs = this.props.icons.map((icon) => <img src={icon} style={iconStyle}/>)
     return (
       <div style={tempStyle}>
         <div style={colorBar}>{" "}</div>
@@ -32,7 +38,9 @@ export default class BoardTile extends Component {
         <div>
           {price ? `($${price})` : null}
         </div>
-        {currentPosition === id ? <img src={icon} style={iconStyle}/> : null}
+        <div style={iconContainer}>
+          {iconImgs}
+        </div>
     </div>
     )
   }

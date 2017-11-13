@@ -11,10 +11,14 @@ export default class Player extends Component {
       flexDirection: 'column',
       fontSize: '40px'
     }
+    const imageStyle = {
+      width: '80px',
+      height: '80px'
+    }
     return (
       <div style={tempStyle}>
         cash: ${cash}
-        <img src={icon}/>
+        <img style={imageStyle} src={icon}/>
         currPos: {currentPosition}
       </div>
     )

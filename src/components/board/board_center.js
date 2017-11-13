@@ -9,6 +9,9 @@ export default class BoardCenter extends Component {
         <button onClick={() => this.props.purchase()}>
           Yes
         </button>
+        <button onClick={() => this.props.nextTurn()}>
+          No
+        </button>
       </div>
     )
   }

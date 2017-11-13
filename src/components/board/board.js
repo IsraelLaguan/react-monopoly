@@ -15,18 +15,18 @@ class BoardPresentational extends Component {
       player: {},
       showPrompt: false,
       currentPlayer: 0,
+      playerCount: 2
     }
   }
 
   componentWillMount() {
-    console.log(Object.values(this.props.player)[0])
-    const player = Object.values(this.props.player)[0]
+    const player = Object.values(this.props.player)[this.state.currentPlayer]
     this.setState({player})
   }
 
   startTurn() {
     let {player, property} = this.props
-    const currPlayer = Object.values(player)[0]
+    const currPlayer = Object.values(this.props.player)[this.state.currentPlayer]
     this.turn = new Turn({player: currPlayer, property})
     this.turn.startTurn()
     this.updateBoard()
@@ -40,7 +40,7 @@ class BoardPresentational extends Component {
     this.props.receivePlayer(playerDispatchData)
     .then(() => {
       this.setState({
-        player: Object.values(this.props.player)[0]
+        player: Object.values(this.props.player)[this.state.currentPlayer]
       })
     })
   }
@@ -53,15 +53,48 @@ class BoardPresentational extends Component {
     }
     this.updateBoard()
     this.setState({showPrompt: !this.state.showPrompt})
+    this.nextTurn()
+  }
+
+  nextTurn() {
+    // player: {},
+    // showPrompt: false,
+    // currentPlayer: 0,
+    // playerCount: 2
+    const { currentPlayer, playerCount } = this.state
+    let currPlayerId
+    if (currentPlayer === playerCount - 1) {
+      currPlayerId = 0
+    } else {
+      currPlayerId = currentPlayer + 1
+    }
+    this.setState({currentPlayer: currPlayerId})
   }
 
   boardTiles(startIdx, endIdx = null) {
     const properties = Object.values(this.props.property)
-    const {icon, currentPosition } = this.state.player
+    // const {icon, currentPosition } = this.state.player
     endIdx = endIdx ? endIdx : properties.length
+
     return properties.slice(startIdx, endIdx).map(data => {
       let { name, price, id, owner } = data
-      let boardTileProps = {name, price, id, icon, currentPosition, owner}
+      // let player = this.props.player[owner]
+      let that = this
+      let player = Object.entries(this.props.player).filter(([playerId, player]) => {
+        return player.currentPosition === id
+      }).map(([playerId, {icon}]) => icon)
+      if (id === 0) {
+        console.log(this.props.player);
+        debugger
+      }
+      // debugger
+      let icons
+      if (player) {
+        icons = player
+      } else {
+        icons = null
+      }
+      let boardTileProps = {name, price, id, icons, owner}
       return <BoardTile key={id} {...boardTileProps}/>
     })
   }
@@ -121,13 +154,14 @@ class BoardPresentational extends Component {
       alignItems:'center',
       flexDirection: 'row-reverse'
     }
-    const player = Object.values(this.props.player)[0]
+    const player = Object.values(this.props.player)[this.state.currentPlayer]
     const { cash, icon, currentPosition } = player
     const playerProps = { cash, icon, currentPosition }
     const boardCenterProps = {
       player: playerProps,
       startTurn: () => this.startTurn(),
-      purchase: () => this.purchase()
+      purchase: () => this.purchase(),
+      nextTurn: () => this.nextTurn()
     }
     return (
       <div style={tempStyle}>
