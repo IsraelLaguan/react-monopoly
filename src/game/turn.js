@@ -1,5 +1,6 @@
 import Player from './player'
 import Die from './die'
+export const self = "self"
 
 export default class Turn {
   constructor({property, player}) {
@@ -28,6 +29,7 @@ export default class Turn {
     const currentProperty = this.property[`${positionId}`]
     const cost = currentProperty.price
     if (this.player.changeCash(-cost)) {
+      this.player.deeds.add(this.player.currentPosition)
       currentProperty.owner = this.player.id
       return true
     } else {
@@ -35,3 +37,15 @@ export default class Turn {
     }
   }
 }
+
+Object.defineProperty(Turn.prototype, 'playerData', {
+  get: function() {
+    return Object.values(this.exportPlayer())[0]
+  }
+})
+
+Object.defineProperty(Turn.prototype, 'propertyData', {
+  get: function() {
+    return this.exportProperty()
+  }
+})

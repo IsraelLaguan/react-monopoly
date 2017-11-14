@@ -9,7 +9,8 @@ const PlayerReducer = (state = defaultState, action) => {
   switch (action.type) {
     case RECEIVE_PLAYER:
       const player = action.player
-      return {...state, ...player}
+      const playObj = {[player.id]: player}
+      return {...state, ...playObj}
     default:
       return state
   }

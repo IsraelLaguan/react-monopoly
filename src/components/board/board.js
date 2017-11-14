@@ -22,26 +22,34 @@ class BoardPresentational extends Component {
 
   componentWillMount() {
     const playerCount = this.props.player.size
-    debugger
     this.setState({playerCount})
   }
 
   startTurn() {
     let {player, property} = this.props
-    const currPlayer = Object.values(player)[this.state.currentPlayer]
+    let currPlayer = Object.values(player)[this.state.currentPlayer]
     this.turn = new Turn({player: currPlayer, property})
     this.turn.startTurn()
     this.updateBoard()
+    const { playerData, propertyData } = this.turn
+    const propertyOwner = this._currentPropertyOwner(playerData.currentPosition)
     this.setState({showPrompt: !this.state.showPrompt})
   }
 
+  _currentPropertyOwner(propertyId) {
+    for (let playerId in this.props.player) {
+      if (this.props.player[playerId].deeds.has(propertyId)) {
+        return this.props.player[playerId]
+      }
+    }
+    return null
+  }
+
   async updateBoard() {
-    const propertyDispatchData = this.turn.exportProperty()
-    const playerDispatchData = this.turn.exportPlayer()
-    this.props.receiveProperty(propertyDispatchData)
-    await this.props.receivePlayer(playerDispatchData)
-    const player = Object.values(this.props.player)[this.state.currentPlayer]
-    this.setState({player})
+    const { playerData, propertyData } = this.turn
+    this.props.receiveProperty(propertyData)
+    await this.props.receivePlayer(playerData)
+    this.setState({player: playerData})
   }
 
   purchase() {

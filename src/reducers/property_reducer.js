@@ -9,7 +9,6 @@ const PropertyReducer = (state = defaultState, action) => {
   switch (action.type) {
     case RECEIVE_PROPERTY:
       const property = action.property
-      debugger
       return property
     default:
       return state

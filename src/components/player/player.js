@@ -2,7 +2,6 @@ import React, { Component} from 'react'
 
 export default class Player extends Component {
   render() {
-    console.log(this.props);
     const { cash, icon, currentPosition } = this.props
     const tempStyle = {
       display: 'flex',
