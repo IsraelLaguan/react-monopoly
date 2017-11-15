@@ -18,6 +18,14 @@ export default class Turn {
     return {[this.player.id]: {...player}}
   }
 
+  chargePlayer() {
+    debugger
+    const rent = this.property[this.player.currentPosition].rent
+    if (rent) {
+      this.player.changeCash(-rent[0])
+    }
+  }
+
   startTurn() {
     const diceRollValue = this._die.roll()
     this.player.move(diceRollValue)

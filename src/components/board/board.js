@@ -14,7 +14,8 @@ class BoardPresentational extends Component {
     super()
     this.state = {
       player: {},
-      showPrompt: false,
+      showPurchasePrompt: false,
+      showRentedPrompt: false,
       currentPlayer: 0,
       playerCount: 0
     }
@@ -33,7 +34,27 @@ class BoardPresentational extends Component {
     this.updateBoard()
     const { playerData, propertyData } = this.turn
     const propertyOwner = this._currentPropertyOwner(playerData.currentPosition)
-    this.setState({showPrompt: !this.state.showPrompt})
+    const isDeed = this.props.property[playerData.currentPosition].rent
+    if (!isDeed) { //will have to add lots of chance/chest/jail logic later
+      this.nextTurn()
+    } else if (propertyOwner && propertyOwner !== playerData.id) {
+      console.log('owned and not the owner!')
+      this.turn.chargePlayer()
+      this.updateBoard()
+      this.setState({
+        showPurchasePrompt: false,
+        showRentedPrompt: true
+      })
+    } else {
+      this.setState({
+        showPurchasePrompt: true,
+        showRentedPrompt: false
+      })
+    }
+  }
+
+  chargePlayer() {
+
   }
 
   _currentPropertyOwner(propertyId) {
@@ -76,7 +97,8 @@ class BoardPresentational extends Component {
     }
     this.setState({
       currentPlayer: currPlayerId,
-      showPrompt: !this.state.showPrompt
+      showPurchasePrompt: false,
+      showRentedPrompt: false
     })
   }
 
@@ -145,9 +167,11 @@ class BoardPresentational extends Component {
     const player = Object.values(this.props.player)[this.state.currentPlayer]
     const { cash, icon, currentPosition } = player
     const playerProps = { cash, icon, currentPosition }
+    const { showPurchasePrompt, showRentedPrompt } = this.state
     const boardCenterProps = {
+      showPurchasePrompt,
+      showRentedPrompt,
       player: playerProps,
-      showPrompt: this.state.showPrompt,
       startTurn: () => this.startTurn(),
       purchase: () => this.purchase(),
       nextTurn: () => this.nextTurn()
