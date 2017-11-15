@@ -19,7 +19,6 @@ export default class Turn {
   }
 
   chargePlayer() {
-    debugger
     const rent = this.property[this.player.currentPosition].rent
     if (rent) {
       this.player.changeCash(-rent[0])

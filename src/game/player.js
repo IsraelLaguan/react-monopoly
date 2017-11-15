@@ -19,7 +19,7 @@ export default class Player {
   }
 
   move(diceRoll) {
-    this.currentPosition += 1
+    this.currentPosition += diceRoll
     if (this.currentPosition >= this.maxSqId) {
       this.currentPosition -= this.maxSqId
       this.cash += 200

@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import Color from '../../database/colors'
 export default class BoardTile extends Component {
   render() {
-    const { name, price, id, currentPosition, icon, owner } = this.props
+    const { name, price, id, currentPosition, icon, owner, playerId } = this.props
+    if (owner || owner === 0) {
+      console.log(owner);
+      console.log(playerId);
+    }
     const tempStyle = {
       height: '80px',
       width: '80px',
@@ -11,7 +15,7 @@ export default class BoardTile extends Component {
       justifyContent: 'flex-start',
       alignItems:'center',
       flexDirection: 'column',
-      backgroundColor: (typeof owner === 'number') ? '#e0dded' : 'transparent'
+      backgroundColor: (owner === playerId && (playerId || playerId === 0)) ? '#e0dded' : 'transparent'
     }
     const iconContainer = {
       display: 'flex',

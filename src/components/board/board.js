@@ -4,10 +4,11 @@ import BoardTile from './board_tile'
 import { connect } from 'react-redux'
 import Player from '../player/player'
 import Turn from '../../game/turn'
-import BoardCenter from './board_center'
+import BoardCenter from '../board_center/board_center'
 import { receivePlayer } from '../../actions/player_actions'
 import { receiveProperty } from '../../actions/property_actions'
 import {Object} from '../../game/helpers/helpers.js'
+import * as boardStyle from './board_styles'
 
 class BoardPresentational extends Component {
   constructor() {
@@ -32,35 +33,50 @@ class BoardPresentational extends Component {
     this.turn = new Turn({player: currPlayer, property})
     this.turn.startTurn()
     this.updateBoard()
+    this.handlePossiblePropertyOwnership()
+  }
+
+  handlePossiblePropertyOwnership() {
     const { playerData, propertyData } = this.turn
     const propertyOwner = this._currentPropertyOwner(playerData.currentPosition)
     const isDeed = this.props.property[playerData.currentPosition].rent
     if (!isDeed) { //will have to add lots of chance/chest/jail logic later
       this.nextTurn()
-    } else if (propertyOwner && propertyOwner !== playerData.id) {
-      console.log('owned and not the owner!')
-      this.turn.chargePlayer()
-      this.updateBoard()
-      this.setState({
-        showPurchasePrompt: false,
-        showRentedPrompt: true
-      })
-    } else {
-      this.setState({
-        showPurchasePrompt: true,
-        showRentedPrompt: false
-      })
+    } else if (!propertyOwner) {
+      this.handleNoOwnerForProperty()
+    } else if (propertyOwner.id === playerData.id) {
+      this.handleIsPropertyOwner()
+    } else if (propertyOwner && propertyOwner.id !== playerData.id) {
+      this.handleIsOwnedByOtherPlayer()
     }
   }
 
-  chargePlayer() {
+  handleNoOwnerForProperty() {
+    this.setState({
+      showPurchasePrompt: true,
+      showRentedPrompt: false
+    })
+  }
 
+  handleIsPropertyOwner() {
+    this.nextTurn()
+  }
+
+  handleIsOwnedByOtherPlayer() {
+    console.log('owned and not the owner!')
+    this.turn.chargePlayer()
+    this.updateBoard()
+    this.setState({
+      showPurchasePrompt: false,
+      showRentedPrompt: true
+    })
   }
 
   _currentPropertyOwner(propertyId) {
-    for (let playerId in this.props.player) {
-      if (this.props.player[playerId].deeds.has(propertyId)) {
-        return this.props.player[playerId]
+    const {player} = this.props
+    for (let playerId in player) {
+      if (player[playerId].deeds.has(propertyId)) {
+        return player[playerId]
       }
     }
     return null
@@ -74,12 +90,9 @@ class BoardPresentational extends Component {
   }
 
   purchase() {
-    if(this.turn.purchase()) {
-      console.log('successful purchase');
-    } else {
-      console.log('not enough monies');
-    }
+    console.log( this.turn.purchase() ? 'successful purchase': 'not enough monies');
     this.updateBoard()
+    // setTimeout(() => this.nextTurn(), 500)
     this.nextTurn()
   }
 
@@ -105,11 +118,12 @@ class BoardPresentational extends Component {
   boardTiles(startIdx, endIdx = null) {
     const properties = Object.values(this.props.property)
     endIdx = endIdx ? endIdx : properties.length
+    let playerId = Object.values(this.props.player)[this.state.currentPlayer].id
     return properties.slice(startIdx, endIdx).map(data => {
       let { name, price, id, owner } = data
-      let playerIcons = this._playersAtPosition(id).map(([playerId, {icon}]) => icon)
+      let playerIcons = this._playersAtPosition(id).map(([_, {icon}]) => icon)
       let icons = playerIcons ? playerIcons : []
-      let boardTileProps = {name, price, id, icons, owner}
+      let boardTileProps = {name, price, id, icons, owner, playerId}
       return <BoardTile key={id} {...boardTileProps}/>
     })
   }
@@ -126,44 +140,6 @@ class BoardPresentational extends Component {
   bottomBoard() {return this.boardTiles(0, 11)}
 
   render() {
-    const tempStyle = {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems:'flex-start',
-      flexDirection: 'column',
-      width: '1000px',
-      marginTop: '30px'
-    }
-    const topStyle = {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems:'flex-start',
-      flexDirection: 'row'
-    }
-    const midContainerStyle = {
-      display: 'flex',
-      justifyContent: 'flex-start',
-      alignItems:'flex-start',
-      flexDirection: 'row'
-    }
-    const leftStyle = {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems:'center',
-      flexDirection: 'column-reverse'
-    }
-    const rightStyle = {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems:'center',
-      flexDirection: 'column'
-    }
-    const bottomStyle = {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems:'center',
-      flexDirection: 'row-reverse'
-    }
     const player = Object.values(this.props.player)[this.state.currentPlayer]
     const { cash, icon, currentPosition } = player
     const playerProps = { cash, icon, currentPosition }
@@ -177,22 +153,22 @@ class BoardPresentational extends Component {
       nextTurn: () => this.nextTurn()
     }
     return (
-      <div style={tempStyle}>
-        <div style={topStyle}>
+      <div style={boardStyle.tempStyle}>
+        <div style={boardStyle.topStyle}>
           {this.topBoard()}
         </div>
-        <div style={midContainerStyle}>
-          <div style={leftStyle}>
+        <div style={boardStyle.midContainerStyle}>
+          <div style={boardStyle.leftStyle}>
             {this.leftBoard()}
           </div>
           <div>
             <BoardCenter {...boardCenterProps}/>
           </div>
-          <div style={rightStyle}>
+          <div style={boardStyle.rightStyle}>
             {this.rightBoard()}
           </div>
         </div>
-        <div style={bottomStyle}>
+        <div style={boardStyle.bottomStyle}>
           {this.bottomBoard()}
         </div>
       </div>
