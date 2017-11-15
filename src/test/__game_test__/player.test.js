@@ -5,8 +5,19 @@ import * as helpers from '../../game/helpers/helpers.js'
 
 describe('Player class', () => {
   let player
+  let playerData = {
+    id: 0,
+    icon: 'd.jpg',
+    cash: 300,
+    deeds: new Set,
+    currentPosition: 0,
+    cards: new Set,
+    inJail: false,
+    turnsLost: 0,
+    maxSqId: 10
+  }
   beforeEach(() => {
-    player = new Player('', 0)
+    player = new Player(playerData)
   })
 
   describe('move', () => {
@@ -60,6 +71,23 @@ describe('Player class', () => {
       player.cash = 100
       player.changeCash(100)
       expect(player.cash).toEqual(200)
+    })
+  })
+
+  describe('exportData', () => {
+    let data, keys
+    beforeEach(() => {
+      data = player.exportData()
+      keys = ['id', 'cash', 'icon', 'deeds', 'inJail', 'turnsLost', 'cards', 'currentPosition']
+    })
+    it('outputs all data', () => {
+      let bool
+      for (let key of keys) {
+        expect(key in data).toEqual(true)
+      }
+    })
+    it('does not output any extra data', () => {
+      expect(Object.keys(data).length).toEqual(keys.length)
     })
   })
 })
