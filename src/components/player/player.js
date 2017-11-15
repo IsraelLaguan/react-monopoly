@@ -2,7 +2,7 @@ import React, { Component} from 'react'
 
 export default class Player extends Component {
   render() {
-    const { cash, icon, currentPosition } = this.props
+    const { cash, icon, currentPosition, propertyName } = this.props
     const tempStyle = {
       display: 'flex',
       justifyContent: 'center',
@@ -18,7 +18,7 @@ export default class Player extends Component {
       <div style={tempStyle}>
         cash: ${cash}
         <img style={imageStyle} src={icon}/>
-        currPos: {currentPosition}
+        You are at: {propertyName}
       </div>
     )
   }

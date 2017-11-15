@@ -3,10 +3,6 @@ import Color from '../../database/colors'
 export default class BoardTile extends Component {
   render() {
     const { name, price, id, currentPosition, icon, owner, playerId } = this.props
-    if (owner || owner === 0) {
-      console.log(owner);
-      console.log(playerId);
-    }
     const tempStyle = {
       height: '80px',
       width: '80px',

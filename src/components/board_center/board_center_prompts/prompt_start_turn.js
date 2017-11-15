@@ -1,9 +1,10 @@
 import React from 'react'
+import Button from 'material-ui/Button';
 
 const PromptStartTurn = props => (
-  <button onClick={() => props.startTurn()}>
+  <Button raised onClick={() => props.startTurn()}>
     Start turn
-  </button>
+  </Button>
 )
 
 export default PromptStartTurn

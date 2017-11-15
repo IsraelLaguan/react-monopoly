@@ -1,14 +1,15 @@
 import React from 'react'
+import Button from 'material-ui/Button';
 
 const PromptPurchase = props => (
   <div>
     Purchase?
-    <button onClick={() => props.purchase()}>
+    <Button raised color='primary' onClick={() => props.purchase()}>
       Yes
-    </button>
-    <button onClick={() => props.nextTurn()}>
+    </Button>
+    <Button raised color='primary' onClick={() => props.nextTurn()}>
       No
-    </button>
+    </Button>
   </div>
 )
 

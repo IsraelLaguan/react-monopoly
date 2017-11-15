@@ -29,7 +29,7 @@ class BoardPresentational extends Component {
 
   startTurn() {
     let {player, property} = this.props
-    let currPlayer = Object.values(player)[this.state.currentPlayer]
+    let currPlayer = player[this.state.currentPlayer]
     this.turn = new Turn({player: currPlayer, property})
     this.turn.startTurn()
     this.updateBoard()
@@ -118,7 +118,7 @@ class BoardPresentational extends Component {
   boardTiles(startIdx, endIdx = null) {
     const properties = Object.values(this.props.property)
     endIdx = endIdx ? endIdx : properties.length
-    let playerId = Object.values(this.props.player)[this.state.currentPlayer].id
+    let playerId = this.props.player[this.state.currentPlayer].id
     return properties.slice(startIdx, endIdx).map(data => {
       let { name, price, id, owner } = data
       let playerIcons = this._playersAtPosition(id).map(([_, {icon}]) => icon)
@@ -140,14 +140,14 @@ class BoardPresentational extends Component {
   bottomBoard() {return this.boardTiles(0, 11)}
 
   render() {
-    const player = Object.values(this.props.player)[this.state.currentPlayer]
+    const player = this.props.player[this.state.currentPlayer]
     const { cash, icon, currentPosition } = player
+    const property = this.props.property[player.currentPosition]
+    const propertyName = property.name
     const playerProps = { cash, icon, currentPosition }
     const { showPurchasePrompt, showRentedPrompt } = this.state
     const boardCenterProps = {
-      showPurchasePrompt,
-      showRentedPrompt,
-      player: playerProps,
+      property, propertyName, showPurchasePrompt, showRentedPrompt, player: playerProps,
       startTurn: () => this.startTurn(),
       purchase: () => this.purchase(),
       nextTurn: () => this.nextTurn()

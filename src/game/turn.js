@@ -10,12 +10,11 @@ export default class Turn {
   }
 
   exportProperty() {
-    return { ...this.property }
+    return {...this.property}
   }
 
   exportPlayer() {
-    const player = this.player.exportData()
-    return {[this.player.id]: {...player}}
+    return this.player.exportData()
   }
 
   chargePlayer() {
@@ -47,7 +46,7 @@ export default class Turn {
 
 Object.defineProperty(Turn.prototype, 'playerData', {
   get: function() {
-    return Object.values(this.exportPlayer())[0]
+    return this.exportPlayer()
   }
 })
 
