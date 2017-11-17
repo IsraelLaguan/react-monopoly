@@ -7,8 +7,9 @@ import Turn from '../../game/turn'
 import BoardCenter from '../board_center/board_center'
 import { receivePlayer } from '../../actions/player_actions'
 import { receiveProperty } from '../../actions/property_actions'
-import {Object} from '../../game/helpers/helpers.js'
+// import {Object} from '../../game/helpers/helpers.js'
 import * as boardStyle from './board_styles'
+require('../../game/helpers/helpers.js')
 
 class BoardPresentational extends Component {
   constructor() {
@@ -64,12 +65,21 @@ class BoardPresentational extends Component {
 
   handleIsOwnedByOtherPlayer() {
     console.log('owned and not the owner!')
+    const { currentPosition } = this.turn.playerData
+    const { owner } = this.turn.propertyData[currentPosition]
     this.turn.chargePlayer()
+    this._giveMoneyTo(owner)
     this.updateBoard()
     this.setState({
       showPurchasePrompt: false,
       showRentedPrompt: true
     })
+  }
+
+  _giveMoneyTo(id) {
+    const { currentPosition } = this.turn.playerData
+    const { rent } = this.turn.propertyData[currentPosition]
+    this.props.player[id].cash += rent[0]
   }
 
   _currentPropertyOwner(propertyId) {
@@ -188,3 +198,4 @@ const mapDispatchToProps = dispatch => ({
 const Board = connect(mapStateToProps, mapDispatchToProps)(BoardPresentational)
 
 export default Board
+export { BoardPresentational }

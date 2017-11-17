@@ -6,7 +6,7 @@ describe('Die class', () => {
     die = new Die
   })
   describe('roll', () => {
-    it('rolls a new valid value at random', () => {
+    it('rolls a proper new valid value at random', () => {
       let roll, valid, checkStill
       const rollVals = new Set
       valid = true

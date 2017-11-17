@@ -9,11 +9,11 @@ export default class Turn {
     this._die = new Die()
   }
 
-  exportProperty() {
+  get propertyData() {
     return {...this.property}
   }
 
-  exportPlayer() {
+  get playerData() {
     return this.player.exportData()
   }
 
@@ -44,14 +44,14 @@ export default class Turn {
   }
 }
 
-Object.defineProperty(Turn, 'playerData', {
-  get: function() {
-    return this.exportPlayer()
-  }
-})
-
-Object.defineProperty(Turn, 'propertyData', {
-  get: function() {
-    return this.exportProperty()
-  }
-})
+// Object.defineProperty(Turn, 'playerData', {
+//   get: function() {
+//     return this.exportPlayer()
+//   }
+// })
+//
+// Object.defineProperty(Turn, 'propertyData', {
+//   get: function() {
+//     return this.exportProperty()
+//   }
+// })
