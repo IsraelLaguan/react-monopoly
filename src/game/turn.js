@@ -44,13 +44,13 @@ export default class Turn {
   }
 }
 
-Object.defineProperty(Turn.prototype, 'playerData', {
+Object.defineProperty(Turn, 'playerData', {
   get: function() {
     return this.exportPlayer()
   }
 })
 
-Object.defineProperty(Turn.prototype, 'propertyData', {
+Object.defineProperty(Turn, 'propertyData', {
   get: function() {
     return this.exportProperty()
   }
