@@ -9,6 +9,16 @@
 //   }
 //   return true
 // }
+Object.defineProperty(Array.prototype, 'shuffle', {
+  value: function() {
+    const nums = new Set()
+    while (nums.size < this.length) {
+      nums.add(Math.floor(Math.random() * this.length))
+    }
+    return [...nums].map(idx => this[idx])
+  },
+  writeable: false
+})
 
 Object.defineProperty(Set.prototype, 'includesAll', {
   value: function(array) {
