@@ -43,15 +43,3 @@ export default class Turn {
     }
   }
 }
-
-// Object.defineProperty(Turn, 'playerData', {
-//   get: function() {
-//     return this.exportPlayer()
-//   }
-// })
-//
-// Object.defineProperty(Turn, 'propertyData', {
-//   get: function() {
-//     return this.exportProperty()
-//   }
-// })

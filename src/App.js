@@ -6,7 +6,7 @@ import BoardComponent from './components/board/board'
 class App extends Component {
   render() {
     const style = {
-      width: '1500px',
+      width: '1100px',
       display: 'flex',
       justifyContent: 'center',
       alignItems:'center'

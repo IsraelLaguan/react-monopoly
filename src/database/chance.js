@@ -1,4 +1,4 @@
-const chances = {
+const Chance = {
   0: {
     name: 'Advance to Go',
     position: 0 //
@@ -56,3 +56,5 @@ const chances = {
     cash: 150
   }
 }
+
+export default Chance

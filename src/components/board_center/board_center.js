@@ -15,7 +15,8 @@ export default class BoardCenter extends Component {
       alignItems: 'center',
       flexDirection: 'column'
     }
-    const { property, showRentedPrompt, showPurchasePrompt, purchase, startTurn, nextTurn, player, propertyName} = this.props
+    const { property, showRentedPrompt, showPurchasePrompt, purchase, startTurn,
+      nextTurn, player, propertyName, ownerName} = this.props
     const promptStartTurnProps = {startTurn: () => startTurn()}
     const promptPurchaseProps = {
       purchase: () => purchase(),
@@ -23,7 +24,7 @@ export default class BoardCenter extends Component {
     }
     const promptRentedProps = {nextTurn: () => nextTurn()}
     const playerProps = {...player, propertyName}
-    const boardCenterTileDetailsProps = {property}
+    const boardCenterTileDetailsProps = {property, ownerName}
     console.log(this.props.property);
     return (
       <div style={centerStyle}>

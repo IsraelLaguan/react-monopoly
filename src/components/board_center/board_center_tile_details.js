@@ -6,6 +6,7 @@ export default class BoardCenterTileDetails extends Component {
     // let improvements, id, name, owner, price, rent, sets
     console.log(this.props);
     // if (this.props.type === 'deed') {
+    let { ownerName } = this.props
     let { improvements, id, name, owner, price, rent, sets } = this.props.property
     // } else if (this.props.type === 'action') {
       // console.log('action idk what to put yet lol');
@@ -15,8 +16,11 @@ export default class BoardCenterTileDetails extends Component {
       fontSize: '30px'
     }
     const cardStyle = {
+      marginTop: '30px',
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      width: '300px',
+      height: '300px'
     }
     let rentNames
     if (name.includes('Railroad')) {
@@ -36,20 +40,32 @@ export default class BoardCenterTileDetails extends Component {
         5: '1 hotel'
       }
     }
+    const detailStyles = {
+      fontSize: '25px'
+    }
+    // <div>
+    //   sets: {sets}
+    // </div>
+    const iconStyles = {
+      width: '26px',
+      height: '26px'
+    }
+    if (ownerName) {
+      debugger
+    }
     return (
       <Card style={cardStyle}>
         <div style={nameStyles}>{name}</div>
-        <div>
-          owned by: {owner ? owner : 'no one'}
-        </div>
-        <div>
-          price: ${price}
-        </div>
-        <div style={cardStyle}>
+        <div style={detailStyles}>
+          <div>
+            owned by: {ownerName ? <img style={iconStyles} src={ownerName}/> : 'no one'}
+          </div>
+          <div>
+            price: ${price}
+          </div>
           rents {(rent ? rent : []).map((e, idx) => <div>{rentNames[idx]}: ${e}</div>)}
-        </div>
-        <div>
-          sets: {sets}
+          <div>
+          </div>
         </div>
       </Card>
     )

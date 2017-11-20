@@ -62,3 +62,5 @@ const CommunityChest = {
     cash: 100
   }
 }
+
+export default CommunityChest

@@ -7,7 +7,6 @@ import Turn from '../../game/turn'
 import BoardCenter from '../board_center/board_center'
 import { receivePlayer } from '../../actions/player_actions'
 import { receiveProperty } from '../../actions/property_actions'
-// import {Object} from '../../game/helpers/helpers.js'
 import * as boardStyle from './board_styles'
 require('../../game/helpers/helpers.js')
 
@@ -156,8 +155,16 @@ class BoardPresentational extends Component {
     const propertyName = property.name
     const playerProps = { cash, icon, currentPosition }
     const { showPurchasePrompt, showRentedPrompt } = this.state
+    let ownerId = property.owner
+    let ownerName
+    if (ownerId || ownerId === 0) {
+      ownerName = this.props.player[ownerId].icon
+    } else {
+      ownerName = null
+    }
     const boardCenterProps = {
       property, propertyName, showPurchasePrompt, showRentedPrompt, player: playerProps,
+      ownerName: ownerName ? ownerName : '',
       startTurn: () => this.startTurn(),
       purchase: () => this.purchase(),
       nextTurn: () => this.nextTurn()

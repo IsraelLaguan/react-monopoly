@@ -9,13 +9,15 @@
 //   }
 //   return true
 // }
+
 Object.defineProperty(Array.prototype, 'shuffle', {
   value: function() {
-    const nums = new Set()
-    while (nums.size < this.length) {
-      nums.add(Math.floor(Math.random() * this.length))
+    const a = [...this]
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
     }
-    return [...nums].map(idx => this[idx])
+    return a
   },
   writeable: false
 })
