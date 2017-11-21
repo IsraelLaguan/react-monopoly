@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Color from '../../database/colors'
 export default class BoardTile extends Component {
   render() {
-    const { name, price, id, currentPosition, icon, owner, playerId } = this.props
+    const { name, price, id, currentPosition, icon, owner, playerId, ownerIcon } = this.props
     const tempStyle = {
       height: '80px',
       width: '80px',
@@ -11,7 +11,7 @@ export default class BoardTile extends Component {
       justifyContent: 'flex-start',
       alignItems:'center',
       flexDirection: 'column',
-      backgroundColor: (owner === playerId && (playerId || playerId === 0)) ? '#e0dded' : 'transparent'
+      // backgroundColor: owner === playerId && ~playerId ? '#e0dded' : 'transparent'
     }
     const iconContainer = {
       display: 'flex',
@@ -28,9 +28,27 @@ export default class BoardTile extends Component {
       height: '30px',
       width: '30px'
     }
+    const ownerIconStyle = {
+      position: 'absolute',
+      width: '60px',
+      height: '60px',
+      opacity: 0.3
+    }
+    const ownerIconContainerStyle = {
+      position: 'absolute',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '80px',
+      height: '80px'
+    }
     const iconImgs = this.props.icons.map((icon) => <img src={icon} style={iconStyle}/>)
+    console.log(ownerIcon);
     return (
       <div style={tempStyle}>
+        <div style={ownerIconContainerStyle}>
+          {ownerIcon ? <img src={ownerIcon} style={ownerIconStyle}/> : null}
+        </div>
         <div style={colorBar}>{" "}</div>
         <div>
           {name}

@@ -130,9 +130,15 @@ class BoardPresentational extends Component {
     let playerId = this.props.player[this.state.currentPlayer].id
     return properties.slice(startIdx, endIdx).map(data => {
       let { name, price, id, owner } = data
+      let ownerIcon
+      if (owner || owner === 0) {
+        ownerIcon = this.props.player[owner].icon
+      } else {
+        ownerIcon = null
+      }
       let playerIcons = this._playersAtPosition(id).map(([_, {icon}]) => icon)
       let icons = playerIcons ? playerIcons : []
-      let boardTileProps = {name, price, id, icons, owner, playerId}
+      let boardTileProps = {name, price, id, icons, owner, playerId, ownerIcon}
       return <BoardTile key={id} {...boardTileProps}/>
     })
   }

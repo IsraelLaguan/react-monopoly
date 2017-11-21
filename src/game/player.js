@@ -27,6 +27,10 @@ export default class Player {
     return this
   }
 
+  moveToPostion(id) {
+    this.currentPosition = id
+  }
+
   hasDeed(id) {
     return this.deeds.has(id)
   }

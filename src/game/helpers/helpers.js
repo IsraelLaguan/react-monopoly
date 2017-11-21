@@ -1,14 +1,4 @@
 //I know this is taboo but it's just so helpful!!
-// Set.prototype.includesAll = function(setOrArray) {
-//   const thisSet = new Set(this)
-//   const findSet = new Set(setOrArray)
-//   for (let el of findSet) {
-//     if (!thisSet.has(el)) {
-//       return false
-//     }
-//   }
-//   return true
-// }
 
 Object.defineProperty(Array.prototype, 'shuffle', {
   value: function() {
@@ -117,8 +107,10 @@ Object.defineProperty(Object.prototype, 'size', {
   writeable: false
 })
 
+const truthy = (element) => !!element || element === 0
+
 // Object.prototype.size = function() {
 //   return Object.entries(this).length
 // }
 
-export { Set, Array, Object }
+export { Set, Array, Object, truthy }
