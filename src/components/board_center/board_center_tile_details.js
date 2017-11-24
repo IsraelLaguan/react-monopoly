@@ -53,17 +53,24 @@ export default class BoardCenterTileDetails extends Component {
     if (ownerName) {
       debugger
     }
+    const ownerDetail = <div>
+                owned by: {ownerName ? <img style={iconStyles} src={ownerName}/> : 'no one'}
+              </div>
+    const rentDetail = <div>
+              rents {(rent ? rent : []).map((e, idx) => <div>{rentNames[idx]}: ${e}</div>)}
+            </div>
+    const priceDetail = <div>
+                price: {price}
+              </div>
     return (
       <Card style={cardStyle}>
         <div style={nameStyles}>{name}</div>
         <div style={detailStyles}>
+          {price ? ownerDetail : ''}
           <div>
-            owned by: {ownerName ? <img style={iconStyles} src={ownerName}/> : 'no one'}
+            {price ? priceDetail : ''}
           </div>
-          <div>
-            price: ${price}
-          </div>
-          rents {(rent ? rent : []).map((e, idx) => <div>{rentNames[idx]}: ${e}</div>)}
+          {price ? rentDetail : ''}
           <div>
           </div>
         </div>
