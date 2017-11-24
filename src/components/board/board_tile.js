@@ -43,7 +43,6 @@ export default class BoardTile extends Component {
       height: '80px'
     }
     const iconImgs = this.props.icons.map((icon) => <img src={icon} style={iconStyle}/>)
-    console.log(ownerIcon);
     return (
       <div style={tempStyle}>
         <div style={ownerIconContainerStyle}>

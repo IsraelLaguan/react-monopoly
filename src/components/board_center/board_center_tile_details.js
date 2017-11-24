@@ -3,15 +3,8 @@ import Card from 'material-ui/Card';
 
 export default class BoardCenterTileDetails extends Component {
   render() {
-    // let improvements, id, name, owner, price, rent, sets
-    console.log(this.props);
-    // if (this.props.type === 'deed') {
-    let { ownerName } = this.props
-    let { improvements, id, name, owner, price, rent, sets } = this.props.property
-    // } else if (this.props.type === 'action') {
-      // console.log('action idk what to put yet lol');
-    // }
-
+    const { ownerName } = this.props
+    const { improvements, id, name, owner, price, rent, sets } = this.props.property
     const nameStyles = {
       fontSize: '30px'
     }
@@ -60,7 +53,7 @@ export default class BoardCenterTileDetails extends Component {
               rents {(rent ? rent : []).map((e, idx) => <div>{rentNames[idx]}: ${e}</div>)}
             </div>
     const priceDetail = <div>
-                price: {price}
+                price: ${price}
               </div>
     return (
       <Card style={cardStyle}>

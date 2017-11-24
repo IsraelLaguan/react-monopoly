@@ -12,9 +12,11 @@ const PromptRented = props => (
     <p style={textStyle}>
       You just got rekt. This is owned and you have been charged rent.
     </p>
-    <Button raised onClick={() => props.nextTurn()}>
-      Ok :(
-    </Button>
+    <div>
+      <Button raised onClick={() => props.nextTurn()}>
+        Ok :(
+        </Button>
+    </div>
   </div>
 )
 

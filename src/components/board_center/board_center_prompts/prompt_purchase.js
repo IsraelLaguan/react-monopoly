@@ -7,8 +7,9 @@ const prompStyle = {
   fontSize: '30px'
 }
 
-const PromptPurchase = props => (
-  <div style={prompStyle}>
+const PromptPurchase = props => {
+
+  const purchasePrompt = <div style={prompStyle}>
     Purchase?
     <Button raised color='primary' onClick={() => props.purchase()}>
       Yes
@@ -17,6 +18,20 @@ const PromptPurchase = props => (
       No
     </Button>
   </div>
-)
+
+  const cantPurchasePrompt = <div style={prompStyle}>
+    <div>
+      Not enough money
+    </div>
+      <Button raised color='primary' onClick={() => props.nextTurn()}>
+      Next turn
+    </Button>
+  </div>
+  return (
+    <div>
+      {props.enoughMoney ? purchasePrompt : cantPurchasePrompt}
+    </div>
+  )
+}
 
 export default PromptPurchase
