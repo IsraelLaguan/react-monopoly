@@ -9,13 +9,13 @@ const textStyle = {
 }
 const PromptRented = props => (
   <div style={containerStyle}>
-    <p style={textStyle}>
-      You just got rekt. This is owned and you have been charged rent.
-    </p>
+    <div style={textStyle}>
+      R E K T. You have been charged rent.
+    </div>
     <div>
-      <Button raised onClick={() => props.nextTurn()}>
+      <Button color='primary' raised onClick={() => props.nextTurn()}>
         Ok :(
-        </Button>
+      </Button>
     </div>
   </div>
 )

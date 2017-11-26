@@ -36,16 +36,13 @@ export default class BoardCenterTileDetails extends Component {
     const detailStyles = {
       fontSize: '25px'
     }
-    // <div>
-    //   sets: {sets}
-    // </div>
     const iconStyles = {
       width: '26px',
       height: '26px'
     }
-    if (ownerName) {
-      debugger
-    }
+    // if (ownerName) {
+    //   debugger
+    // }
     const ownerDetail = <div>
                 owned by: {ownerName ? <img style={iconStyles} src={ownerName}/> : 'no one'}
               </div>

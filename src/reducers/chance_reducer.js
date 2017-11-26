@@ -1,4 +1,4 @@
-import { RECEIVE_CHANCE } from '../actions/chance_actions'
+import { GET_CHANCE } from '../actions/chance_actions'
 
 const defaultState = {
   chance: {}
@@ -7,7 +7,7 @@ const defaultState = {
 const ChanceReducer = (state = defaultState, action) => {
   Object.freeze(state)
   switch (action.type) {
-    case RECEIVE_CHANCE:
+    case GET_CHANCE:
       const chance = state.chance
       chance.used = true
       const chanceObj = {[chance.id]: chance}

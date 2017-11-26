@@ -8,6 +8,7 @@ import BoardCenter from '../board_center/board_center'
 import { receivePlayer } from '../../actions/player_actions'
 import { receiveProperty } from '../../actions/property_actions'
 import * as boardStyle from './board_styles'
+import Chance from '../../database/chance'
 require('../../game/helpers/helpers.js')
 
 class BoardPresentational extends Component {
@@ -17,9 +18,19 @@ class BoardPresentational extends Component {
       player: {},
       showPurchasePrompt: false,
       showRentedPrompt: false,
+      showChancePrompt: false,
       currentPlayer: 0,
-      playerCount: 0
+      playerCount: 0,
+      chance: null
     }
+  }
+
+  clearPrompts() {
+    this.setState({
+      showPurchasePrompt: false,
+      showRentedPrompt: false,
+      showChancePrompt: false
+    })
   }
 
   componentWillMount() {
@@ -39,8 +50,9 @@ class BoardPresentational extends Component {
   handlePossiblePropertyOwnership() {
     const { playerData, propertyData } = this.turn
     const propertyOwner = this._currentPropertyOwner(playerData.currentPosition)
-    const isDeed = this.props.property[playerData.currentPosition].rent
-    if (!isDeed) { //will have to add lots of chance/chest/jail logic later
+    const propertyType = this.props.property[playerData.currentPosition].type
+    if (propertyType === 'action') { //will have to add lots of chance/chest/jail logic later
+      this.handleChanceCard()
       this.nextTurn()
     } else if (!propertyOwner) {
       this.handleNoOwnerForProperty()
@@ -51,11 +63,31 @@ class BoardPresentational extends Component {
     }
   }
 
-  handleNoOwnerForProperty() {
+  handleChanceCard() {
+    const rand = Math.floor(Math.random() * (Object.keys(this.props.chance).length - 1))
+    console.log(this.turn.playerData);
+    console.log('chanced');
+    const card = this.props.chance[rand]
+    console.log(card);
+    debugger
+    if (card.cash) {
+      this.turn.changePlayerCash(card.cash)
+    }
+    if (card.position || card.position === 0) {
+      this.turn.changePlayerPosition(card.position)
+    }
+    console.log(this.turn.playerData);
+    this.updateBoard()
+    this.clearPrompts()
     this.setState({
-      showPurchasePrompt: true,
-      showRentedPrompt: false
+      showChancePrompt: true,
+      chance: card
     })
+  }
+
+  handleNoOwnerForProperty() {
+    this.clearPrompts()
+    this.setState({showPurchasePrompt: true})
   }
 
   handleIsPropertyOwner() {
@@ -66,13 +98,11 @@ class BoardPresentational extends Component {
     console.log('owned and not the owner!')
     const { currentPosition } = this.turn.playerData
     const { owner } = this.turn.propertyData[currentPosition]
-    this.turn.chargePlayer()
+    this.turn.chargePlayerRent()
     this._giveMoneyTo(owner)
     this.updateBoard()
-    this.setState({
-      showPurchasePrompt: false,
-      showRentedPrompt: true
-    })
+    this.clearPrompts()
+    this.setState({showRentedPrompt: true})
   }
 
   _giveMoneyTo(id) {
@@ -175,6 +205,9 @@ class BoardPresentational extends Component {
       purchase: () => this.purchase(),
       nextTurn: () => this.nextTurn()
     }
+    if (this.state.chance) {
+      boardCenterProps['chance'] = this.state.chance
+    }
     return (
       <div style={boardStyle.tempStyle}>
         <div style={boardStyle.topStyle}>
@@ -199,8 +232,8 @@ class BoardPresentational extends Component {
   }
 }
 
-const mapStateToProps = ({property, player}) => ({
-  property, player
+const mapStateToProps = ({property, player, chance}) => ({
+  property, player, chance
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -17,11 +17,19 @@ export default class Turn {
     return this.player.exportData()
   }
 
-  chargePlayer() {
+  chargePlayerRent() {
     const rent = this.property[this.player.currentPosition].rent
     if (rent) {
       this.player.changeCash(-rent[0])
     }
+  }
+
+  changePlayerCash(amt) {
+    this.player.changeCash(amt)
+  }
+
+  changePlayerPosition(id) {
+    this.player.currentPosition = id
   }
 
   startTurn() {

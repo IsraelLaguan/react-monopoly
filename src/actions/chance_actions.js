@@ -1,10 +1,10 @@
-export const RECEIVE_CHANCE = 'RECEIVE_CHANCE'
+export const GET_CHANCE = 'GET_CHANCE'
 
-export const receiveChance = chance => async (dispatch) => {
-  return dispatch(receiveChanceDispatch(chance))
+export const getChance = chance => async (dispatch) => {
+  return dispatch(getChanceDispatch(chance))
 }
 
-const receiveChanceDispatch = chance => ({
-  type: RECEIVE_CHANCE,
+const getChanceDispatch = chance => ({
+  type: GET_CHANCE,
   chance
 })

@@ -1,23 +1,24 @@
 const Chance = {
   0: {
     name: 'Advance to Go',
-    position: 0 //
+    position: 0, //
+    cash: 200
   },
   1: {
     name: 'Advance to Illinois Ave.',
-    position: null
+    position: 24
   },
   2: {
     name: 'Advance to St. Charles Place',
-    position: null
+    position: 11
   },
   3: {
     name:'Advance to nearest Utility',
-    position: null
+    position: 30
   },
   4: {
     name: 'Advance to neareset Railroad',
-    position: null
+    position: 25
   },
   5: {
     name: 'Bank pays you dividend of $50',
@@ -41,11 +42,11 @@ const Chance = {
   },
   10: {
     name: 'Take a trip to Reading Railroad',
-    position: null
+    position: 5
   },
   11: {
     name: 'Take a walk on Boardwalk',
-    position: null
+    position: 39
   },
   12: {
     name: 'You have been elected Chairman of the Board',

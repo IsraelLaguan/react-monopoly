@@ -25,6 +25,7 @@ export default class BoardCenter extends Component {
       player, enoughMoney
     }
     const promptRentedProps = {nextTurn: () => nextTurn()}
+    const promptChanceProps = {chance: this.props.chance}
     const playerProps = {...player, propertyName}
     const boardCenterTileDetailsProps = {property, ownerName}
     return (
