@@ -10,7 +10,9 @@ const prompStyle = {
 const PromptPurchase = props => {
 
   const purchasePrompt = <div style={prompStyle}>
-    Purchase?
+    <div>
+      Purchase?
+    </div>
     <Button raised color='primary' onClick={() => props.purchase()}>
       Yes
     </Button>
