@@ -34,7 +34,8 @@ const Chance = {
     canPassGo: false
   },
   8: {
-    name: 'Make general repairs on all properties'
+    name: 'Make general repairs on all properties',
+    cash: -20
   },
   9: {
     name: 'Pay poor tax of $15',

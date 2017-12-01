@@ -13,7 +13,7 @@ const props = [ //id is line number of file minus 2
   ['St. Charles Place', 'deed', 140, [], [10, 50, 150, 450, 625, 750]],
   ['Electric Company', 'deed', 150, [], [150]],
   ['States Ave', 'deed', 140, [], [10, 50, 150, 450, 625, 750]],
-  ['Virginia Ave', 'deed', 160, [12, 60, 180, 500, 700, 900]],
+  ['Virginia Ave', 'deed', 160, [], [12, 60, 180, 500, 700, 900]],
   ['Pennsylvania Railroad', 'deed', 200, [], [25,50, 100, 200]],
   ['St. James Pl', 'deed', 180, [], [14, 70, 200, 550, 750]],
   ['Community Chest', 'action'],
