@@ -1,6 +1,5 @@
 import Player from './player'
 import Die from './die'
-export const self = "self"
 
 export default class Turn {
   constructor({property, player}) {
@@ -10,7 +9,7 @@ export default class Turn {
   }
 
   get propertyData() {
-    return {...this.property}
+    return this.property
   }
 
   get playerData() {
