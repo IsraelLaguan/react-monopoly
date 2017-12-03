@@ -9,6 +9,7 @@ import { receivePlayer } from '../../actions/player_actions'
 import { receiveProperty } from '../../actions/property_actions'
 import * as boardStyle from './board_styles'
 import Chance from '../../database/chance'
+import { truthy } from '../../game/helpers/helpers.js'
 require('../../game/helpers/helpers.js')
 
 class BoardPresentational extends Component {
@@ -74,9 +75,9 @@ class BoardPresentational extends Component {
     if (card.cash) {
       this.turn.changePlayerCash(card.cash)
     }
-    if (card.position || card.position === 0) {
-      if ((this.turn.player.currentPosition > card.position &&
-        card.position !== 0)
+    if (truthy(card.position)){
+      if (this.turn.player.currentPosition > card.position &&
+        card.position !== 0 && this.turn.player.currentPosition !== 0
       ) {
         this.turn.changePlayerCash(200)
       }
@@ -167,7 +168,7 @@ class BoardPresentational extends Component {
     return properties.slice(startIdx, endIdx).map(data => {
       let { name, price, id, owner } = data
       let ownerIcon
-      if (owner || owner === 0) {
+      if (truthy(owner)) {
         ownerIcon = this.props.player[owner].icon
       } else {
         ownerIcon = null

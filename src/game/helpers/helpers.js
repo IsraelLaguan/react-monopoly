@@ -107,7 +107,7 @@ Object.defineProperty(Object.prototype, 'size', {
   writeable: false
 })
 
-const truthy = (element) => !!element || element === 0
+const truthy = (element) => element !== undefined && element !== null && element !== false
 
 // Object.prototype.size = function() {
 //   return Object.entries(this).length

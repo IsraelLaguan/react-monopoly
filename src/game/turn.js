@@ -34,7 +34,11 @@ export default class Turn {
 
   startTurn() {
     const diceRollValue = this._die.roll()
+    const prevPosition = this.player.currentPosition
     this.player.move(diceRollValue)
+    if (this.player.currentPosition - prevPosition < 0) {
+      this.changePlayerPosition(200)
+    }
     return this
   }
 

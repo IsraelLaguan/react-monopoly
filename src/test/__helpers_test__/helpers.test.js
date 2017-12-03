@@ -60,3 +60,23 @@ describe('Array monkeypatches', () => {
 describe('Object monkeypatches', () => {
   expect(true).toEqual(true)
 })
+
+describe('function helpers', () => {
+  describe('truthy', () => {
+    it('accounts for 0 in truthy', () => {
+      expect(helpers.truthy(0)).toEqual(true)
+    })
+    it('only registers undefined, null, and false as untruthy', () => {
+      const tests = ['', [], new String(''), {}]
+      for (let i = 0; i < tests.length; i++) {
+        expect(helpers.truthy(tests[i])).toEqual(true)
+      }
+    })
+    it('counts undefined null and false as untruthy', () => {
+      const tests = [undefined, null, false]
+      for (let i = 0; i < tests.length; i++) {
+        expect(helpers.truthy(tests[i])).toEqual(false)
+      }
+    })
+  })
+})
