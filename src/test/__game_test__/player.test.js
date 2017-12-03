@@ -72,6 +72,21 @@ describe('Player class', () => {
       player.changeCash(100)
       expect(player.cash).toEqual(200)
     })
+    it('makes no change to cash if impossible', () => {
+      player.cash = 100
+      player.changeCash(-200)
+      expect(player.cash).toEqual(100)
+    })
+    it('returns true if successful cash change', () => {
+      player.cash = 100
+      let success = player.changeCash(100)
+      expect(success).toEqual(true)
+    })
+    it('returns false, unsuccessful change', () => {
+      player.cash = 100
+      let success = player.changeCash(-200)
+      expect(success).toEqual(false)
+    })
   })
 
   describe('exportData', () => {

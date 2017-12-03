@@ -17,7 +17,8 @@ export default class Turn {
   }
 
   chargePlayerRent() {
-    const rent = this.property[this.player.currentPosition].rent
+    const positionId = this.player.currentPosition
+    const rent = this.property[`${positionId}`].rent
     if (rent) {
       this.player.changeCash(-rent[0])
     }
@@ -36,7 +37,7 @@ export default class Turn {
     const prevPosition = this.player.currentPosition
     this.player.move(diceRollValue)
     if (this.player.currentPosition - prevPosition < 0) {
-      this.changePlayerPosition(200)
+      this.changePlayerCash(200)
     }
     return this
   }
@@ -48,9 +49,6 @@ export default class Turn {
     if (this.player.changeCash(-cost)) {
       this.player.deeds.add(this.player.currentPosition)
       currentProperty.owner = this.player.id
-      return true
-    } else {
-      return false
     }
   }
 }

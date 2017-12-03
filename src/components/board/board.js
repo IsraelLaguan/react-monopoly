@@ -137,7 +137,7 @@ class BoardPresentational extends Component {
   }
 
   purchase() {
-    console.log( this.turn.purchase() ? 'successful purchase': 'not enough monies');
+    this.turn.purchase()
     this.updateBoard()
     // setTimeout(() => this.nextTurn(), 500)
     this.nextTurn()

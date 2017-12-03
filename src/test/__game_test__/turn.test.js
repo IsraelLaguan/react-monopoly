@@ -91,4 +91,45 @@ describe('Turn game class', () => {
     })
   })
 
+  describe('changePlayerPosition', () => {
+    it('changes player position', () => {
+      turnInstance.changePlayerPosition(10)
+      expect(turnInstance.player.currentPosition).toEqual(10)
+    })
+  })
+
+  describe('startTurn', () => {
+    it('calls player class method move', () => {
+      turnInstance.startTurn()
+      expect(turnInstance.player.move).toBeCalled()
+    })
+
+    it('calls changePlayerCash if passed go', () => {
+      turnInstance.player.move = jest.fn(() => {
+        turnInstance.player.currentPosition = 1
+      })
+      turnInstance.changePlayerCash = jest.fn()
+      turnInstance.player.currentPosition = 20
+      turnInstance.startTurn()
+      expect(turnInstance.changePlayerCash).toBeCalled()
+    })
+  })
+
+  describe('purchase', () => {
+    beforeEach(() => {
+      turnInstance.player.currentPosition = 0
+      turnInstance.player.deeds = []
+      turnInstance.player.deeds.add = jest.fn()
+    })
+    it ('adds deed to player set of deeds if player.changeCash returns true', () => {
+      turnInstance.player.changeCash = jest.fn( _ => true)
+      turnInstance.purchase()
+      expect(turnInstance.player.deeds.add).toBeCalled()
+    })
+    it ('does not add deed if player.changeCash returns false', () => {
+      turnInstance.player.changeCash = jest.fn( _ => false)
+      turnInstance.purchase()
+      expect(turnInstance.player.deeds.add).not.toBeCalled()
+    })
+  })
 })
