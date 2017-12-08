@@ -30,7 +30,7 @@ const Chance = {
   },
   7: {
     name: 'Go to Jail',
-    position: null,
+    position: 10,
     canPassGo: false
   },
   8: {

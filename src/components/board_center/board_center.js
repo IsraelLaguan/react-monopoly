@@ -5,6 +5,7 @@ import PromptPurchase from './board_center_prompts/prompt_purchase'
 import PromptStartTurn from './board_center_prompts/prompt_start_turn'
 import BoardCenterTileDetails from './board_center_tile_details'
 import PromptChance from './board_center_prompts/prompt_chance'
+import Chance from './board_center_prompts/chance'
 
 const centerStyle = {
   width: '738px',
@@ -17,9 +18,9 @@ const centerStyle = {
 
 export default class BoardCenter extends Component {
   render() {
-    const { property, showRentedPrompt, showPurchasePrompt, showChancePrompt,
-      purchase, startTurn, nextTurn, player, propertyName,
-      ownerName, chance} = this.props
+    const { property, showRentedPrompt, showPurchasePrompt,
+      toggleChanceCard, purchase, startTurn, nextTurn, player,
+      propertyName, ownerName, turn, showChancePrompt } = this.props
 
     const promptStartTurnProps = {
       startTurn: () => startTurn()
@@ -34,7 +35,7 @@ export default class BoardCenter extends Component {
       nextTurn: () => nextTurn()
     }
     const promptChanceProps = {
-      chance, showPurchasePrompt,
+      showPurchasePrompt, turn,
       nextTurn: () => nextTurn()
     }
     console.log(showChancePrompt);
@@ -69,7 +70,7 @@ export default class BoardCenter extends Component {
         {showRentedPrompt || showPurchasePrompt || showChancePrompt ? null : <PromptStartTurn {...promptStartTurnProps}/>}
         {showRentedPrompt ? <PromptRented {...promptRentedProps}/> : null}
         {showPurchasePrompt ? <PromptPurchase {...promptPurchaseProps}/> : null}
-        {showChancePrompt ? <PromptChance {...promptChanceProps}/> : null}
+        {showChancePrompt ? <Chance {...promptChanceProps}/> : null}
         {showRentedPrompt || showPurchasePrompt ? <BoardCenterTileDetails {...boardCenterTileDetailsProps}/> : null}
       </div>
     )

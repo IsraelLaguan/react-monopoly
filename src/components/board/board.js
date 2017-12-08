@@ -54,7 +54,7 @@ class BoardPresentational extends Component {
     const propertyOwner = this._currentPropertyOwner(playerData.currentPosition)
     const propertyType = this.props.property[playerData.currentPosition].type
     if (propertyType === 'action') { //will have to add lots of chance/chest/jail logic later
-      this.handleChanceCard()
+      this.toggleChanceCard()
       // this.nextTurn()
     } else if (!propertyOwner) {
       this.handleNoOwnerForProperty()
@@ -65,56 +65,57 @@ class BoardPresentational extends Component {
     }
   }
 
-  handleChanceCard() {
-    const rand = Math.floor(Math.random() * (Object.keys(this.props.chance).length - 1))
-    console.log(this.turn.playerData);
-    console.log('chanced');
-    // debugger
-    // const card = this.props.chance[rand]
-    const card = this.props.chance[1]
-    console.log(card);
-    // debugger
-    if (card.cash) {
-      this.turn.changePlayerCash(card.cash)
-    }
-    if (truthy(card.position)){
-      if (this.turn.player.currentPosition > card.position &&
-        card.position !== 0 && this.turn.player.currentPosition !== 0
-      ) {
-        this.turn.changePlayerCash(200)
-      }
-      this.turn.changePlayerPosition(card.position)
-    }
-    this.updateBoard()
+  toggleChanceCard() {
     this.clearPrompts()
-    this.setState({
-      showChancePrompt: true,
-      chance: card
-    })
-    if (truthy(card.position)) {
-      const currentOwner = this.props.property[card.position].owner
-      if (truthy(currentOwner)) {
-        if (this.turn.player.id !== currentOwner) {
-          const { currentPosition } = this.turn.playerData
-          const { owner } = this.turn.propertyData[currentPosition]
-          this.turn.chargePlayerRent()
-          this._giveMoneyTo(owner)
-          setTimeout(() => {
-            this.setState({
-              showRentedPrompt: true,
-              showChancePrompt: false
-            })
-          }, 500)
-        } else {
-          this.setState({
-            showChancePrompt: true
-          })
-        }
-      } else {
-        this.setState({showPurchasePrompt: true})
-      }
-    }
-    this.updateBoard()
+    this.setState({showChancePrompt: !this.state.showChancePrompt})
+    // const rand = Math.floor(Math.random() * (Object.keys(this.props.chance).length - 1))
+    // console.log(this.turn.playerData);
+    // console.log('chanced');
+    // // debugger
+    // // const card = this.props.chance[rand]
+    // const card = this.props.chance[1]
+    // console.log(card);
+    // // debugger
+    // if (card.cash) {
+    //   this.turn.changePlayerCash(card.cash)
+    // }
+    // if (truthy(card.position)){
+    //   if (this.turn.player.currentPosition > card.position &&
+    //     card.position !== 0 && this.turn.player.currentPosition !== 0
+    //   ) {
+    //     this.turn.changePlayerCash(200)
+    //   }
+    //   this.turn.changePlayerPosition(card.position)
+    // }
+    // this.updateBoard()
+    // this.setState({
+    //   showChancePrompt: true,
+    //   chance: card
+    // })
+    // if (truthy(card.position)) {
+    //   const currentOwner = this.props.property[card.position].owner
+    //   if (truthy(currentOwner)) {
+    //     if (this.turn.player.id !== currentOwner) {
+    //       const { currentPosition } = this.turn.playerData
+    //       const { owner } = this.turn.propertyData[currentPosition]
+    //       this.turn.chargePlayerRent()
+    //       this._giveMoneyTo(owner)
+    //       setTimeout(() => {
+    //         this.setState({
+    //           showRentedPrompt: true,
+    //           showChancePrompt: false
+    //         })
+    //       }, 500)
+    //     } else {
+    //       this.setState({
+    //         showChancePrompt: true
+    //       })
+    //     }
+    //   } else {
+    //     this.setState({showPurchasePrompt: true})
+    //   }
+    // }
+    // this.updateBoard()
   }
 
   handleNoOwnerForProperty() {
@@ -216,6 +217,7 @@ class BoardPresentational extends Component {
 
   render() {
     const player = this.props.player[this.state.currentPlayer]
+    const turn = this.turn
     const { cash, icon, currentPosition } = player
     const property = this.props.property[player.currentPosition]
     const propertyName = property.name
@@ -231,14 +233,15 @@ class BoardPresentational extends Component {
     const boardCenterProps = {
       property, propertyName, showPurchasePrompt,
       showRentedPrompt, showChancePrompt,
-      player: playerProps,
+      player: playerProps, turn,
       ownerName: ownerName ? ownerName : '',
       startTurn: () => this.startTurn(),
       purchase: () => this.purchase(),
-      nextTurn: () => this.nextTurn()
+      nextTurn: () => this.nextTurn(),
+      toggleChanceCard: () => this.toggleChanceCard()
     }
     if (this.state.chance) {
-      boardCenterProps['chance'] = this.state.chance
+      boardCenterProps['chance'] = this.turn
     } else {
       boardCenterProps['chance'] = null
     }
@@ -266,8 +269,8 @@ class BoardPresentational extends Component {
   }
 }
 
-const mapStateToProps = ({property, player, chance}) => ({
-  property, player, chance
+const mapStateToProps = ({property, player}) => ({
+  property, player
 })
 
 const mapDispatchToProps = dispatch => ({
