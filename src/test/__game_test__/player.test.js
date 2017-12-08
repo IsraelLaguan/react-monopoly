@@ -67,25 +67,30 @@ describe('Player class', () => {
   })
 
   describe('changeCash', () => {
-    it('increments cash by set amount', () => {
-      player.cash = 100
-      player.changeCash(100)
-      expect(player.cash).toEqual(200)
+    let success
+    describe('successful transaction', () => {
+      beforeEach(() => {
+        player.cash = 100
+         success = player.changeCash(100)
+      })
+      it('increments cash by set amount', () => {
+        expect(player.cash).toEqual(200)
+      })
+      it('returns true if successful cash change', () => {
+        expect(success).toEqual(true)
+      })
     })
-    it('makes no change to cash if impossible', () => {
-      player.cash = 100
-      player.changeCash(-200)
-      expect(player.cash).toEqual(100)
-    })
-    it('returns true if successful cash change', () => {
-      player.cash = 100
-      let success = player.changeCash(100)
-      expect(success).toEqual(true)
-    })
-    it('returns false, unsuccessful change', () => {
-      player.cash = 100
-      let success = player.changeCash(-200)
-      expect(success).toEqual(false)
+    describe('unsuccessful transaction', () => {
+      beforeEach(() => {
+        player.cash = 100
+        success = player.changeCash(-200)
+      })
+      it('returns false, unsuccessful change', () => {
+        expect(success).toEqual(false)
+      })
+      it('makes no change to cash if impossible', () => {
+        expect(player.cash).toEqual(100)
+      })
     })
   })
 
@@ -96,7 +101,6 @@ describe('Player class', () => {
       keys = ['id', 'cash', 'icon', 'deeds', 'inJail', 'turnsLost', 'cards', 'currentPosition']
     })
     it('outputs all data', () => {
-      let bool
       for (let key of keys) {
         expect(key in data).toEqual(true)
       }

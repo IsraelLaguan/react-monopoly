@@ -5,25 +5,16 @@ jest.mock('../../game/die')
 import Die from '../../game/die'
 
 const player = {
-  id: 0,
+  id: 0, cash: 300, deeds: new Set,  currentPosition: 0,
+  cards: new Set, inJail: false, turnsLost: 0,
   icon: 'http://www.drovevets.co.uk/images/icon_dog.png',
-  cash: 300,
-  deeds: new Set,
-  currentPosition: 0,
-  cards: new Set,
-  inJail: false,
-  turnsLost: 0,
 }
 // const player = new Player(playerData)
 
 const mockDeed = {
-  id: 1,
-  name: 'Test Ave.',
-  type: 'deed',
-  price: 200,
-  rent: [20, 100, 300],
-  sets: [],
-  owner: null,
+  id: 1, name: 'Test Ave.', type: 'deed',
+  price: 200, rent: [20, 100, 300],
+  sets: [], owner: null,
   improvements: 0
 }
 
@@ -33,12 +24,8 @@ const mockAction = {
   type: 'action'
 }
 
-const property = {
-  0: mockDeed,
-  1: mockAction
-}
+const property = { 0: mockDeed, 1: mockAction }
 
-describe('test filler',() => it('fills', () => expect(true).toEqual(true)))
 describe('Turn game class', () => {
   let turnInstance
   beforeEach(() => {
@@ -104,14 +91,28 @@ describe('Turn game class', () => {
       expect(turnInstance.player.move).toBeCalled()
     })
 
-    it('calls changePlayerCash if passed go', () => {
-      turnInstance.player.move = jest.fn(() => {
-        turnInstance.player.currentPosition = 1
+    describe('cash change', () => {
+      beforeEach(() => {
+        turnInstance.changePlayerCash = jest.fn()
+        turnInstance.player.currentPosition = 20
       })
-      turnInstance.changePlayerCash = jest.fn()
-      turnInstance.player.currentPosition = 20
-      turnInstance.startTurn()
-      expect(turnInstance.changePlayerCash).toBeCalled()
+      it('calls changePlayerCash if passed go', () => {
+        turnInstance.player.move = jest.fn(() => {
+          turnInstance.player.currentPosition = 1
+        })
+        turnInstance.startTurn()
+        expect(turnInstance.changePlayerCash).toBeCalled()
+      })
+
+      it('does not changePlayerCash if not passed go', () => {
+        it('calls changePlayerCash if passed go', () => {
+          turnInstance.player.move = jest.fn(() => {
+            turnInstance.player.currentPosition = 26
+          })
+          turnInstance.startTurn()
+          expect(turnInstance.changePlayerCash).not.toBeCalled()
+        })
+      })
     })
   })
 

@@ -29,9 +29,10 @@ const PromptPurchase = props => {
       Next turn
     </Button>
   </div>
+  console.log(props.chance);
   return (
     <div>
-      {props.enoughMoney ? purchasePrompt : cantPurchasePrompt}
+        {props.enoughMoney ? purchasePrompt : cantPurchasePrompt}
     </div>
   )
 }

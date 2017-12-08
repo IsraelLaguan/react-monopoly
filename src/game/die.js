@@ -3,8 +3,8 @@ export default class Die {
   }
 
   roll() {
-    return Math.ceil(Math.random() * 6)
-    // return 7
+    // return Math.ceil(Math.random() * 6)
+    return 7
   }
 
 }
