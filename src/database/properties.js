@@ -66,6 +66,7 @@ const buildProperties = () => {
 }
 
 const Properties = buildProperties()
+export {props, action, buildProperties}
 export default Properties
 //
 // const Properties = {
