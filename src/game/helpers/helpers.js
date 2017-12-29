@@ -87,7 +87,7 @@ Object.defineProperty(Object.prototype, 'filter', {
   value: function(cb) {
     const newObj = {}
     for (let el in this) {
-      if (cb(el)) {
+      if (cb(this[el])) {
         newObj[el] = this[el]
       }
     }

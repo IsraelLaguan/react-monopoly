@@ -46,8 +46,8 @@ export default class Player {
   }
 
   getDeeds(allDeeds) {
-    return allDeeds.filter(key => {
-      let keyId = allDeeds[key].id
+    return allDeeds.filter(tile => {
+      let keyId = tile.id
       return this.deeds.has(`${keyId}`)
     })
   }

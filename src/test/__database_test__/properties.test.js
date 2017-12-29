@@ -1,10 +1,19 @@
 import Properties, {props, action, buildProperties} from '../../database/properties'
 require('../../game/helpers/helpers')
 
-function hasAttrs(arr, obj){ //for deeds/action builders test
-  for (let key in obj) {
-    if (!arr.includes(key)) {
-      return false
+function hasAttrs(arr, data){ //for deeds/action builders test
+  debugger
+  if (Array.isArray(data)) {
+    for (let prop of arr) {
+      if (!tile[prop]) {
+        return false
+      }
+    }
+  } else {
+    for (let key in data) {
+      if (!arr.includes(key)) {
+        return false
+      }
     }
   }
   return true
@@ -47,6 +56,15 @@ describe('Properties database', () => {
     })
   })
 
-  describe('buildProperties function', () => {
+  describe('Properties (made from buildProperties function)', () => {
+    const attrs = ['id', 'name', 'type', 'price', 'sets', 'owner', 'rent', 'houses', 'hotels', 'improvements']
+    it('has deeds with every prop needed', () => {
+      const deedProperties = Properties.filter((deed) => deed.type === 'deed')
+      //This is a monkeypatch! for filter of an object
+      for (let key in deedProperties) {
+        let tile = deedProperties[key]
+        expect(hasAttrs(attrs, tile)).toEqual(true)
+      }
+    })
   })
 })
