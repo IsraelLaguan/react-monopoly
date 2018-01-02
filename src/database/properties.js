@@ -11,7 +11,7 @@ const props = [ //id is line number of file minus 2
   ['Connecticut Ave', 'deed', 120, [], [8, 40, 100, 300, 450]],
   ['Jail', 'action'], //bottom left
   ['St. Charles Place', 'deed', 140, [], [10, 50, 150, 450, 625, 750]],
-  ['Electric Company', 'deed', 150, [], [150]],
+  ['Electric Company', 'deed', 150, [], [15]],
   ['States Ave', 'deed', 140, [], [10, 50, 150, 450, 625, 750]],
   ['Virginia Ave', 'deed', 160, [], [12, 60, 180, 500, 700, 900]],
   ['Pennsylvania Railroad', 'deed', 200, [], [25,50, 100, 200]],
@@ -27,8 +27,8 @@ const props = [ //id is line number of file minus 2
   ['B. & O. Railroad', 'deed', 200, [], [25, 50, 100, 200]],
   ['Atlantic Ave', 'deed', 260, [], [22, 110, 330, 800, 975, 1150]],
   ['Ventnor Ave', 'deed', 260, [], [22, 110, 330, 800, 975]],
-  ['Water Works', 'deed', 150, [], []],
-  ['Marvin Gardens', 'deed', 280, [], []],
+  ['Water Works', 'deed', 150, [], [15]],
+  ['Marvin Gardens', 'deed', 280, [], [26, 130, 390, 900, 1100, 1275]],
   ['Go To Jail', 'action'], //top right
   ['Pacific Ave', 'deed', 300, [], [26, 130, 390, 900, 1100, 1275]],
   ['North Carolina Ave', 'deed', 300, [], [26, 130, 390, 900, 1100, 1275]],

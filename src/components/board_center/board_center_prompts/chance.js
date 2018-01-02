@@ -29,10 +29,12 @@ class ChancePresentational extends Component {
       if (this._passedGo) {
         this.turn.changePlayerCash(200)
       }
-      this.turn.changePlayerPosition(this.card.position)
-      if (this._isNotOwner && this._isOwned) {
-        this.turn.chargePlayerRent()
-        this._giveMoneyTo(this.props.property[this.card.position].owner)
+      if (truthy(this.card.position)) {
+        this.turn.changePlayerPosition(this.card.position)
+        if (this._isNotOwner && this._isOwned) {
+          this.turn.chargePlayerRent()
+          this._giveMoneyTo(this.props.property[this.card.position].owner)
+        }
       }
     }
     this.updateBoard()
@@ -88,7 +90,7 @@ class ChancePresentational extends Component {
     }
     return (
       <div>
-        <button style={chanceStyle} onClick={() => this.handleCardClick()}>
+        <button style={chanceStyle} onClick={() => this.state.showOk ? null : this.handleCardClick()}>
           {this.state.show ? this.card.name : 'CHANCE!'}
         </button>
         {

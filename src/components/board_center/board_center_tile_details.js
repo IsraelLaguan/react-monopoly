@@ -13,7 +13,6 @@ export default class BoardCenterTileDetails extends Component {
       display: 'flex',
       flexDirection: 'column',
       width: '300px',
-      height: '300px'
     }
     let rentNames
     if (name.includes('Railroad')) {

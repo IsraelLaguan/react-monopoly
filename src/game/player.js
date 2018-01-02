@@ -46,10 +46,8 @@ export default class Player {
   }
 
   getDeeds(allDeeds) {
-    return allDeeds.filter(tile => {
-      let keyId = tile.id
-      return this.deeds.has(`${keyId}`)
-    })
+    return allDeeds.filter(tile => this.deeds.has(`${tile.id}`))
+    //monkeypatch of object see helpers.js
   }
 
   changeCash(amt) {
