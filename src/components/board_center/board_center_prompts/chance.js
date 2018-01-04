@@ -7,12 +7,15 @@ import { truthy } from '../../../game/helpers/helpers.js'
 require('../../../game/helpers/helpers.js')
 
 class ChancePresentational extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       show: false,
       showOk: false
     }
+  }
+
+  componentWillMount() {
     this.turn = this.props.turn
     this.player = this.props.turn.player
     const RNG = Math.random() * (this.props.chance.size - 1)
@@ -119,3 +122,4 @@ const mapDispatchToProps = dispatch => ({
 const Chance = connect(mapStateToProps, mapDispatchToProps)(ChancePresentational)
 
 export default Chance
+export {ChancePresentational}

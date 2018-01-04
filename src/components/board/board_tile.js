@@ -21,8 +21,9 @@ export default class BoardTile extends Component {
     const color = Color[id]
     const colorBar = {
       backgroundColor: color || 'transparent' ,
-      width: '80px',
-      height: '10px'
+      width: '81px',
+      height: '10px',
+      zIndex: '-1'
     }
     const iconStyle = {
       height: '30px',

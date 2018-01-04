@@ -10,11 +10,11 @@ const textStyle = {
 const PromptRented = props => (
   <div style={containerStyle}>
     <div style={textStyle}>
-      R E K T. You have been charged rent.
+      {'R E K T. You have been charged rent.'}
     </div>
     <div>
       <Button color='primary' raised onClick={() => props.nextTurn()}>
-        Ok :(
+        {'Ok :('}
       </Button>
     </div>
   </div>
