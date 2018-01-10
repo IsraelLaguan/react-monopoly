@@ -74,9 +74,6 @@ class ChancePresentational extends Component {
   }
 
   get _isNotOwner() {
-    console.log(this.props.property);
-    console.log(this.card.position);
-    debugger
     return this.player.id !== this.props.property[this.card.position].owner
   }
 

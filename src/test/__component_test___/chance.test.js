@@ -19,11 +19,16 @@ describe('Chance Component', () => {
     presentational.props = {
       property: Properties,
       turn,
-      chance: Chance
+      chance: Chance,
+      receivePlayer: () => jest.fn(),
+      receiveProperty: () => jest.fn()
     }
     presentational.card = {}
-    presentational.turn = {}
-    presentational.turn.player = {}
+    presentational.turn = {
+      player: {},
+      changePlayerCash: () => jest.fn(),
+      changePlayerPosition: () => jest.fn()
+    }
   })
   describe('Chance componentWillMount', () => {
     beforeEach(() => {
@@ -122,15 +127,60 @@ describe('Chance Component', () => {
     })
   })
 
-  // describe('handleCardClick', () => {
-  //   beforeEach(() => {
-  //   })
-  //   it('only calls this.turn.changePlayerCash if the chance card is a cash changing card', () => {
-  //     presentational.card.cash = 100
-  //     presentational.turn = {}
-  //     presentational.turn.changePlayerCash = jest.fn()
-  //     presentational.handleCardClick()
-  //     expect(presentational.turn.changePlayerCash).toBeCalled()
-  //   })
-  // })
+  describe('handleCardClick', () => {
+    beforeEach(() => {
+      presentational.setState = jest.fn()
+      presentational.props = {
+        receiveProperty: () => jest.fn(),
+        receivePlayer: () => jest.fn()
+      }
+      presentational.props.property = {}
+      presentational.player = {}
+      presentational.turn = {}
+      presentational.turn.changePlayerCash = jest.fn()
+      presentational.turn.changePlayerPosition = jest.fn()
+      presentational.turn.chargePlayerRent = jest.fn()
+      presentational.turn.changePlayerPosition = jest.fn()
+    })
+    it('only calls this.turn.changePlayerCash if the chance card is a cash changing card', () => {
+      presentational.card.cash = true
+      presentational.handleCardClick()
+      expect(presentational.turn.changePlayerCash).toBeCalled()
+      expect(presentational.turn.changePlayerPosition).not.toBeCalled()
+      expect(presentational.turn.chargePlayerRent).not.toBeCalled()
+    })
+    it('only calls this.turns.changePlayerPosition if go to jail', () => {
+      presentational.card.name = 'Go to Jail'
+      presentational.handleCardClick()
+      expect(presentational.turn.changePlayerPosition).toBeCalled()
+      expect(presentational.turn.changePlayerCash).not.toBeCalled()
+      expect(presentational.turn.chargePlayerRent).not.toBeCalled()
+    })
+    describe('conditions in else block', () => {
+      beforeEach(() => {
+        presentational.card.cash = false
+        presentational.card.name = null
+        presentational.card.position = false
+        presentational.props.property = {
+          4: {owner: null},
+          20: { owner: null}
+        }
+      })
+      it('gives money if pass go conditions met', () => {
+        presentational.player.currentPosition = 20
+        presentational.card.position = 4
+        presentational.handleCardClick()
+        expect(presentational.turn.changePlayerCash).toBeCalled()
+      })
+      it('calls position change', () => {
+        presentational.player.currentPosition = 20
+        presentational.card.position = 4
+        presentational.handleCardClick()
+        expect(presentational.turn.changePlayerPosition).toBeCalled()
+      })
+      it('charges rent if owned and is not the owner', () => {
+        
+      })
+    })
+  })
 })
