@@ -36,7 +36,7 @@ class ChancePresentational extends Component {
         this.turn.changePlayerPosition(this.card.position)
         if (this._isNotOwner && this._isOwned) {
           this.turn.chargePlayerRent()
-          this._giveMoneyTo(this.props.property[this.card.position].owner)
+          this.props.giveMoneyTo(this.props.property[this.card.position].owner)
         }
       }
     }

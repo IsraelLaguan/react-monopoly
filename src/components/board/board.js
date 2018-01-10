@@ -83,13 +83,13 @@ class BoardPresentational extends Component {
     const { currentPosition } = this.turn.playerData
     const { owner } = this.turn.propertyData[currentPosition]
     this.turn.chargePlayerRent()
-    this._giveMoneyTo(owner)
+    this.giveMoneyTo(owner)
     this.updateBoard()
     this.clearPrompts()
     this.setState({showRentedPrompt: true})
   }
 
-  _giveMoneyTo(id) {
+  giveMoneyTo(id) {
     const { currentPosition } = this.turn.playerData
     const { rent } = this.turn.propertyData[currentPosition]
     this.props.player[id].cash += rent[0]
@@ -190,7 +190,8 @@ class BoardPresentational extends Component {
       startTurn: () => this.startTurn(),
       purchase: () => this.purchase(),
       nextTurn: () => this.nextTurn(),
-      toggleChanceCard: () => this.toggleChanceCard()
+      toggleChanceCard: () => this.toggleChanceCard(),
+      giveMoneyTo: (id) => this.giveMoneyTo(id)
     }
     if (this.state.chance) {
       boardCenterProps['chance'] = this.turn

@@ -20,7 +20,7 @@ export default class BoardCenter extends Component {
   render() {
     const { property, showRentedPrompt, showPurchasePrompt,
       toggleChanceCard, purchase, startTurn, nextTurn, player,
-      propertyName, ownerName, turn, showChancePrompt } = this.props
+      propertyName, ownerName, turn, showChancePrompt, giveMoneyTo } = this.props
 
     const promptStartTurnProps = {
       startTurn: () => startTurn()
@@ -35,7 +35,7 @@ export default class BoardCenter extends Component {
       nextTurn: () => nextTurn()
     }
     const promptChanceProps = {
-      showPurchasePrompt, turn,
+      showPurchasePrompt, turn, giveMoneyTo,
       nextTurn: () => nextTurn()
     }
     console.log(showChancePrompt);

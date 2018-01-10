@@ -130,9 +130,11 @@ describe('Chance Component', () => {
   describe('handleCardClick', () => {
     beforeEach(() => {
       presentational.setState = jest.fn()
+      presentational.updateBoard = jest.fn()
       presentational.props = {
         receiveProperty: () => jest.fn(),
-        receivePlayer: () => jest.fn()
+        receivePlayer: () => jest.fn(),
+        giveMoneyTo: () => jest.fn()
       }
       presentational.props.property = {}
       presentational.player = {}
@@ -156,11 +158,19 @@ describe('Chance Component', () => {
       expect(presentational.turn.changePlayerCash).not.toBeCalled()
       expect(presentational.turn.chargePlayerRent).not.toBeCalled()
     })
+    it('calls updateBoard', () => {
+      presentational.handleCardClick()
+      expect(presentational.updateBoard).toBeCalled()
+    })
+    it('calls setState', () => {
+      presentational.handleCardClick()
+      expect(presentational.setState).toBeCalled()
+    })
     describe('conditions in else block', () => {
       beforeEach(() => {
-        presentational.card.cash = false
+        presentational.card.cash = null
         presentational.card.name = null
-        presentational.card.position = false
+        presentational.card.position = 4
         presentational.props.property = {
           4: {owner: null},
           20: { owner: null}
@@ -178,8 +188,23 @@ describe('Chance Component', () => {
         presentational.handleCardClick()
         expect(presentational.turn.changePlayerPosition).toBeCalled()
       })
-      it('charges rent if owned and is not the owner', () => {
-        
+      describe('this._isNotOwner && this._isOwned conditional', () => {
+        beforeEach(() => {
+          presentational.card.position = 4
+          presentational.player.id = 1
+          presentational.props.property = {
+            4: {owner: 3},
+            20: { owner: null}
+          }
+          presentational.props.giveMoneyTo = jest.fn()
+          presentational.handleCardClick()
+        })
+        it('calls this.turn.chargePlayerRent', () => {
+          expect(presentational.turn.chargePlayerRent).toBeCalled()
+        })
+        it('calls this.props.giveMoneyTo', () => {
+          expect(presentational.props.giveMoneyTo).toBeCalled()
+        })
       })
     })
   })
