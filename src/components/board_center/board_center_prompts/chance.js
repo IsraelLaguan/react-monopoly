@@ -28,6 +28,7 @@ class ChancePresentational extends Component {
       this.turn.changePlayerCash(this.card.cash)
     } else if (this.card.name === 'Go to Jail'){ //will have to add jail counter
       this.turn.changePlayerPosition(this.card.position)
+      this.player.goToJail()
     } else {
       if (this._passedGo) {
         this.turn.changePlayerCash(200)
@@ -60,7 +61,7 @@ class ChancePresentational extends Component {
   get _passedGo() {
     const {player, card} = this
     return player.currentPosition > card.position &&
-      player.currentPosition !== 0
+      player.currentPosition !== 0 && truthy(card.position)
   }
 
   get _isPropertyOwner() {
@@ -86,7 +87,7 @@ class ChancePresentational extends Component {
       border:'1px solid black',
       width: '200px',
       height: '100px',
-      backgroundColor: 'red'
+      backgroundColor: '#e36262'
     }
     return (
       <div>

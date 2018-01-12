@@ -20,6 +20,7 @@ class BoardPresentational extends Component {
       showPurchasePrompt: false,
       showRentedPrompt: false,
       showChancePrompt: false,
+      showInJailPrompt: false,
       currentPlayer: 0,
       playerCount: 0,
       chance: null
@@ -30,7 +31,8 @@ class BoardPresentational extends Component {
     this.setState({
       showPurchasePrompt: false,
       showRentedPrompt: false,
-      showChancePrompt: false
+      showChancePrompt: false,
+      showInJailPrompt: false
     })
   }
 
@@ -44,7 +46,12 @@ class BoardPresentational extends Component {
     let {player, property} = this.props
     let currPlayer = player[this.state.currentPlayer]
     this.turn = new Turn({player: currPlayer, property})
-    this.turn.startTurn()
+    if (player.turnsLost > 0) {
+      player.turnsLost -= 1
+      this.setState({showInJailPrompt: true})
+    } else {
+      this.turn.startTurn()
+    }
     this.updateBoard()
     this.handlePossiblePropertyOwnership()
   }
@@ -120,10 +127,6 @@ class BoardPresentational extends Component {
   }
 
   nextTurn() {
-    // player: {},
-    // showPrompt: false,
-    // currentPlayer: 0,
-    // playerCount: 2
     const { currentPlayer, playerCount } = this.state
     let currPlayerId
     if (currentPlayer === playerCount - 1) {
@@ -170,7 +173,7 @@ class BoardPresentational extends Component {
   render() {
     const player = this.props.player[this.state.currentPlayer]
     const turn = this.turn
-    const { cash, icon, currentPosition } = player
+    const { cash, icon, currentPosition, turnsLost } = player
     const property = this.props.property[player.currentPosition]
     const propertyName = property.name
     const playerProps = { cash, icon, currentPosition }
@@ -185,7 +188,7 @@ class BoardPresentational extends Component {
     const boardCenterProps = {
       property, propertyName, showPurchasePrompt,
       showRentedPrompt, showChancePrompt,
-      player: playerProps, turn,
+      player: playerProps, turn, turnsLost,
       ownerName: ownerName ? ownerName : '',
       startTurn: () => this.startTurn(),
       purchase: () => this.purchase(),
